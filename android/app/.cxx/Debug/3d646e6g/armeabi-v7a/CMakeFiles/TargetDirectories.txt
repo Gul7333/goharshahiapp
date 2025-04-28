@@ -1,0 +1,2 @@
+/home/gohar/Desktop/deen_ilaahi/android/app/.cxx/Debug/3d646e6g/armeabi-v7a/CMakeFiles/edit_cache.dir
+/home/gohar/Desktop/deen_ilaahi/android/app/.cxx/Debug/3d646e6g/armeabi-v7a/CMakeFiles/rebuild_cache.dir
