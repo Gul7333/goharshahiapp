@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gohar_shahi/OtherScreens/ReadBookScreen.dart';
+import 'package:gohar_shahi/OtherScreens/PdfAssetView.dart';
 import 'package:gohar_shahi/Widgets/OpenLivePdf.dart';
 
 final RouteObserver<ModalRoute<void>> routeObserver =

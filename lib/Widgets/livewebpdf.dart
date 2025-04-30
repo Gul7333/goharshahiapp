@@ -1,26 +1,41 @@
-// import 'package:flutter/material.dart';
-// import 'package:web/web.dart';
-// import 'package:html/dom.dart';
-// import 'package:html/dom_parsing.dart';
-// import 'package:html/html_escape.dart';
-// import 'package:html/parser.dart';
+import 'dart:ui_web' as ui_web;
+import 'package:web/web.dart' as web;
+import 'package:flutter/widgets.dart';
 
+class IframeWidget extends StatelessWidget {
+  final String url;
+  final double width;
+  final double height;
 
-// class IframeWidget extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     // Create an iframe using dart:html
-//     final iframe = document.querySelector("iframe")
-//       ..width = '800'
-//       ..height = '600'
-//       ..src = 'https://flutter.dev'
-//       ..style.border = 'none';
+  const IframeWidget({
+    super.key,
+    required this.url,
+    this.width = 800,
+    this.height = 600,
+  });
 
-//     // Append to the DOM
-   
-//     html.document.body?.append(iframe);
+  @override
+  Widget build(BuildContext context) {
+    final viewType = 'iframe-${url.hashCode}';
 
-//     // Return an empty container (since DOM is modified directly)
-//     return SizedBox.shrink();
-//   }
-// }
+    // Register a view factory for the given URL only once
+    // (This is safe because Flutter web caches view factories by viewType)
+    ui_web.platformViewRegistry.registerViewFactory(
+      viewType,
+      (int viewId) {
+        final iframe = web.HTMLIFrameElement()
+          ..src = url
+          ..style.border = 'none'
+          ..width = '${width.toInt()}'
+          ..height = '${height.toInt()}';
+        return iframe;
+      },
+    );
+
+    return SizedBox(
+      width: width,
+      height: height,
+      child: HtmlElementView(viewType: viewType),
+    );
+  }
+}
