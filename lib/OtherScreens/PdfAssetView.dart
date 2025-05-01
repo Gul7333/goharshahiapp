@@ -18,7 +18,6 @@ class ReadBookScreen extends StatefulWidget {
 
 class _ReadBookScreenState extends State<ReadBookScreen> {
   final PdfViewerController _controller = PdfViewerController();
-  double progress = 0;
 
   // final GlobalKey<SfPdfViewerState> _pdfViewerKey = GlobalKey();
 
@@ -43,11 +42,11 @@ class _ReadBookScreenState extends State<ReadBookScreen> {
     }
   }
 
-   @override
-    void dispose() {
-      
-      super.dispose();
-        }
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,27 +69,11 @@ class _ReadBookScreenState extends State<ReadBookScreen> {
         widget.bookUrl,
         params: PdfViewerParams(
           loadingBannerBuilder: (context, bytesDownloaded, totalBytes) {
-if(totalBytes != null){
+          
 
-                 progress = bytesDownloaded / totalBytes ;
-                 setState(() {
-                   
-                 });
-}
-
-            return  Center(
-                  child: CircularPercentIndicator(
-                    percent: progress,
-                    radius: 25,
-                    center: Text('${(progress * 100).toStringAsFixed(0)}%'),
-                    footer: Text(
-                      "${widget.bookTitle} loading",
-                      textAlign: TextAlign.center,
-                      softWrap: true,
-                      style: TextStyle(fontSize: 12),
-                    ),
-                  
-                ));
+            return Center(
+           child:CircularProgressIndicator(),
+            );
           },
 
           scaleEnabled: true,
@@ -124,8 +107,9 @@ if(totalBytes != null){
                   orientation: ScrollbarOrientation.bottom,
                   thumbSize: const Size(45, 25),
                   thumbBuilder:
-                      (context, thumbSize, pageNumber, controller) =>
-                          Container(color: const Color.fromARGB(255, 39, 38, 37)),
+                      (context, thumbSize, pageNumber, controller) => Container(
+                        color: const Color.fromARGB(255, 39, 38, 37),
+                      ),
                 ),
               ],
         ),

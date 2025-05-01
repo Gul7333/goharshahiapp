@@ -222,12 +222,7 @@ class SongListScreenState extends State<SongListScreen> {
               autofocus: true,
               label: Text("Send us Your Qasida also "),
               style: TextButton.styleFrom(
-                backgroundColor: const Color.fromARGB(
-                  255,
-                  9,
-                  78,
-                  134,
-                ).withValues(alpha: 20), // light blue background
+               // light blue background
                 padding: const EdgeInsets.symmetric(
                   horizontal: 16,
                   vertical: 10,
