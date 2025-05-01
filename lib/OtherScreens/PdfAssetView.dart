@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:pdfrx/pdfrx.dart';
+import 'package:percent_indicator/flutter_percent_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ReadBookScreen extends StatefulWidget {
   final String bookUrl;
   final String bookTitle;
-
   const ReadBookScreen({
     super.key,
     required this.bookUrl,
@@ -18,6 +18,7 @@ class ReadBookScreen extends StatefulWidget {
 
 class _ReadBookScreenState extends State<ReadBookScreen> {
   final PdfViewerController _controller = PdfViewerController();
+  double progress = 0;
 
   // final GlobalKey<SfPdfViewerState> _pdfViewerKey = GlobalKey();
 
@@ -68,6 +69,30 @@ class _ReadBookScreenState extends State<ReadBookScreen> {
         controller: _controller,
         widget.bookUrl,
         params: PdfViewerParams(
+          loadingBannerBuilder: (context, bytesDownloaded, totalBytes) {
+if(totalBytes != null){
+
+                 progress = bytesDownloaded / totalBytes ;
+                 setState(() {
+                   
+                 });
+}
+
+            return  Center(
+                  child: CircularPercentIndicator(
+                    percent: progress,
+                    radius: 25,
+                    center: Text('${(progress * 100).toStringAsFixed(0)}%'),
+                    footer: Text(
+                      "${widget.bookTitle} loading",
+                      textAlign: TextAlign.center,
+                      softWrap: true,
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  
+                ));
+          },
+
           scaleEnabled: true,
           enableTextSelection: true,
           enableKeyboardNavigation: true,
