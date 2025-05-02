@@ -6,6 +6,7 @@ import 'package:gohar_shahi/Screens/GalleryScreen.dart';
 import 'package:gohar_shahi/Screens/HomeScreen.dart';
 import 'package:gohar_shahi/Screens/OtherScreen.dart';
 import 'package:gohar_shahi/Screens/ReferenceScreen.dart';
+import 'package:pdfrx/pdfrx.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
 final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.system);
@@ -16,7 +17,8 @@ Future<void> main(List<String> args) async {
   fvp.registerWith(); // Register FVP before creating any player
 
   tz.initializeTimeZones();
-
+// Enable Pdfium WASM support
+Pdfrx.webRuntimeType = PdfrxWebRuntimeType.pdfiumWasm;
   // _startBackgroundDownloads();
   runApp(const MyApp());
 }
