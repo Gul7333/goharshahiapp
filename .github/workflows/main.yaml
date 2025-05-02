@@ -31,7 +31,7 @@ jobs:
         run: flutter pub get
 
       - name: Build Flutter Web with base href
-        run: flutter build web 
+        run: flutter build web --wasm
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
