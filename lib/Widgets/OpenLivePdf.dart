@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gohar_shahi/Helper/DownloadandSave.dart';
-import 'package:gohar_shahi/Widgets/livewebpdf.dart';
 import 'package:pdfrx/pdfrx.dart';
 import 'package:percent_indicator/flutter_percent_indicator.dart';
 
@@ -146,7 +145,7 @@ class _PdffullviewState extends State<Pdffullview> {
     // );
 
     return kIsWeb
-        ? IframeWidget(url: getDrivePreviewUrl(widget.pdf.path!))
+        ? Text("book")
         : PdfViewer.file((widget.pdf.path!),
         controller: _controller, // <-- Add this line
         params: PdfViewerParams(

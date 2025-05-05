@@ -39,7 +39,7 @@ dependencies:
   webview_flutter: ^4.10.0
   adhan_dart: ^1.1.2
   timezone: ^0.10.0
-  geolocator: ^13.0.4
+  geolocator: ^14.0.0
   shared_preferences: ^2.3.3
   path_provider: ^2.1.5
   permission_handler: ^12.0.0+1
@@ -47,7 +47,7 @@ dependencies:
   flutter_markdown: ^0.7.5
   font_awesome_flutter: ^10.8.0
   fvp: ^0.31.1
-  just_audio: ^0.9.46
+  just_audio: ^0.10.2
   pdfrx: ^1.1.17
   dio: ^5.8.0+1
   percent_indicator: ^4.2.4
