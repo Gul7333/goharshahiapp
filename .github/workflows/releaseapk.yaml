@@ -6,6 +6,10 @@ on:
       - main  # Adjust this to your release branch
   workflow_dispatch:  # Allows manual triggering of the workflow
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
     build:
@@ -52,3 +56,10 @@ jobs:
             name: release-apk
             path: build/app/outputs/flutter-apk/app-release.apk
   
+        - name: Create GitHub Release and Upload APK
+          uses: ncipollo/release-action@v1
+          with:
+            tag: v${{ github.run_number }}
+            name: "Release v${{ github.run_number }}"
+            artifacts: build/app/outputs/flutter-apk/app-release.apk
+            token: ${{ secrets.GITHUB_TOKEN }}
