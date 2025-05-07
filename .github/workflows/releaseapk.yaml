@@ -57,7 +57,7 @@ jobs:
             path: build/app/outputs/flutter-apk/app-release.apk
 
         - name: Rename APK
-          run: mv build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/GoharShahiApp-v${{ github.run_number }}.apk
+          run: mv build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/GoharShahiApp.apk
           
   
         - name: Create GitHub Release and Upload APK
@@ -65,5 +65,5 @@ jobs:
           with:
             tag: v${{ github.run_number }}
             name: "Release v${{ github.run_number }}"
-            artifacts: build/app/outputs/flutter-apk/GoharShahiApp-v${{ github.run_number }}.apk
+            artifacts: build/app/outputs/flutter-apk/GoharShahiApp.apk
             token: ${{ secrets.GITHUB_TOKEN }}

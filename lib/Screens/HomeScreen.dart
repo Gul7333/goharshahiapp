@@ -8,6 +8,7 @@ import 'package:gohar_shahi/OtherScreens/Mp3screen.dart';
 import 'package:gohar_shahi/RouteAnimation/FadeAnimations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:gohar_shahi/Widgets/HtmlViewer.dart';
 import 'package:gohar_shahi/Widgets/LifeOfGoharShahi.dart';
 import 'package:gohar_shahi/Widgets/YounusAlGohar.dart';
 import 'package:gohar_shahi/main.dart';
@@ -189,10 +190,22 @@ Widget build(BuildContext context) {
                         Colors.blue,
                         "https://web.facebook.com/profile.php?id=61550662965206",
                       ),
-                      _buildSocialCard(
-                        FontAwesomeIcons.youtube,
-                        Colors.red,
-                        "https://www.youtube.com/alratv",
+                    InkWell(
+                        onTap: () {
+                          Navigator.of(
+                            context,
+                          ).push(createDropFadeRoute(Inappwebview(url: "https://www.youtube.com/alratv")));
+                        },
+                        child: Card(
+                          elevation: 2,
+                          child: Padding(
+                            padding: const EdgeInsets.all(13.0),
+                            child: Icon(
+                              FontAwesomeIcons.youtube,
+                              color: Colors.red,
+                            ),
+                          ),
+                        ),
                       ),
                       _buildSocialCard(
                         Icons.message_rounded,

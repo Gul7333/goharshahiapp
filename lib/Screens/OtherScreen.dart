@@ -41,7 +41,7 @@ class Otherscreen extends StatelessWidget {
         'subtitle': 'Links of Official websites',
         'icon': FontAwesomeIcons.link,
         'color': const Color.fromARGB(255, 83, 52, 138),
-        'onTap': () => Navigator.of(context).push(createDropFadeRoute(LinktreeViewer())),
+        'onTap': () => Navigator.of(context).push(createDropFadeRoute(Inappwebview(url: "https://linktr.ee/alratv"))),
       },
     ];
 
