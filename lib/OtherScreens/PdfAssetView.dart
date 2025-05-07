@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pdfrx/pdfrx.dart';
-import 'package:percent_indicator/flutter_percent_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ReadBookScreen extends StatefulWidget {

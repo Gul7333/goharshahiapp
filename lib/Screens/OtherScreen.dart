@@ -5,6 +5,7 @@ import 'package:gohar_shahi/Helper/fetchJson.dart';
 import 'package:gohar_shahi/OtherScreens/Websites.dart';
 import 'package:gohar_shahi/RouteAnimation/FadeAnimations.dart';
 import 'package:gohar_shahi/Screens/PrayerScreen.dart';
+import 'package:gohar_shahi/Widgets/HtmlViewer.dart';
 import 'package:gohar_shahi/Widgets/OpenLivePdf.dart';
 
 
@@ -34,6 +35,13 @@ class Otherscreen extends StatelessWidget {
         'icon': FontAwesomeIcons.globe,
         'color': Colors.deepPurple,
         'onTap': () => Navigator.of(context).push(createDropFadeRoute(WebsiteScreen())),
+      },
+        {
+        'title': 'Official LinkTree of Alra tv',
+        'subtitle': 'Links of Official websites',
+        'icon': FontAwesomeIcons.link,
+        'color': const Color.fromARGB(255, 83, 52, 138),
+        'onTap': () => Navigator.of(context).push(createDropFadeRoute(LinktreeViewer())),
       },
     ];
 

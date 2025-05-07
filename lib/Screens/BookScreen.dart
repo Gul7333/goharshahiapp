@@ -164,12 +164,14 @@ class BookScreenState extends State<BookScreen> {
           slivers: [
             SliverAppBar(
               floating: true,
-              pinned: true,
+              // pinned: true,
               expandedHeight: 100.0,
               title: const Text(
                 "Books of Ra Gohar Shahi",
                 style: TextStyle(fontWeight: FontWeight.bold),
+                
               ),
+              
               flexibleSpace: FlexibleSpaceBar(
                 background: Padding(
                   padding: const EdgeInsets.fromLTRB(16, 10, 16, 2),
@@ -182,7 +184,7 @@ class BookScreenState extends State<BookScreen> {
                       style: TextStyle(color: Colors.white),
                       autofocus: false,
                       decoration: InputDecoration(
-                        hintText: 'your language name e.g pashto...',
+                        hintText: 'search books',
                         hintStyle: TextStyle(
                           color: Theme.of(context).hintColor,
                         ),

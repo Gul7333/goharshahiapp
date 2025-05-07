@@ -11,7 +11,7 @@ class IframeWidget extends StatelessWidget {
     super.key,
     required this.url,
     this.width = 800,
-    this.height = 600,
+    this.height = 800,
   });
 
   @override

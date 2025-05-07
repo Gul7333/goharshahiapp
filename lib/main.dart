@@ -31,10 +31,7 @@ class MyApp extends StatelessWidget {
     return ValueListenableBuilder<ThemeMode>(
       valueListenable: themeNotifier,
       builder: (context, mode, _) {
-        // Set system nav bar color
-        // setSystemUIOverlayStyle(brightness);
         return MaterialApp(
-          //  navigatorObservers: [routeObserver],
           debugShowCheckedModeBanner: false,
           themeMode: mode,
           theme: ThemeData(
