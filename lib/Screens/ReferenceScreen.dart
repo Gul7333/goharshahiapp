@@ -1,15 +1,11 @@
-import 'dart:typed_data';
 
 import 'package:gohar_shahi/Data/data.dart';
 import 'package:gohar_shahi/Data/wilayatmolaali.dart';
 import 'package:gohar_shahi/OtherScreens/BeautifullList.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:gal/gal.dart';
 import 'package:gohar_shahi/RouteAnimation/FadeAnimations.dart';
-import 'dart:ui' as ui;
-import 'package:permission_handler/permission_handler.dart';
+import 'package:gohar_shahi/Widgets/ZikarCard.dart';
 import 'package:video_player/video_player.dart';
 // import 'package:fvp/fvp.dart' as fvp;
 
@@ -216,201 +212,13 @@ class Listofdata extends StatelessWidget {
       body: ListView.builder(
         itemCount: data.length,
         itemBuilder: (context, idx) {
-          return HadithDisplayWidget(hadithData: data[idx]);
+          return ZikrCard(zikr: data[idx]);
         },
       ),
     );
   }
 }
 
-class HadithDisplayWidget extends StatelessWidget {
-  final ZikrData hadithData;
-
-  HadithDisplayWidget({super.key, required this.hadithData});
-
-  // GlobalKey for capturing the widget as an image
-  final GlobalKey _repaintBoundaryKey = GlobalKey();
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Stack(
-        children: [
-          RepaintBoundary(
-            key: _repaintBoundaryKey,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Container(
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Color(0xfffbed96), Color(0xffabecd6)],
-                    stops: [0, 1],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  // color: Colors.black
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: [
-                      Text(
-                        hadithData.reference,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue,
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      Text(
-                        hadithData.arabic,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontFamily: '',
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textDirection: TextDirection.rtl,
-                      ),
-                      const SizedBox(height: 18),
-                      const Text(
-                        'Translations:',
-                        style: TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      _buildTranslationSection(
-                        'Urdu:',
-                        hadithData.translation.ur,
-                      ),
-                      _buildTranslationSection(
-                        'Hindi:',
-                        hadithData.translation.hi,
-                      ),
-                      _buildTranslationSection(
-                        'English:',
-                        hadithData.translation.en,
-                      ),
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.facebook),
-                          SizedBox(width: 10),
-                          FaIcon(
-                            FontAwesomeIcons.youtube, // FontAwesome icon
-                            size: 20.0,
-                            color: Colors.black,
-                          ),
-                          SizedBox(width: 10),
-                          FaIcon(
-                            FontAwesomeIcons.twitter, // FontAwesome icon
-                            size: 20.0,
-                            color: Colors.black,
-                          ),
-                          SizedBox(width: 7),
-                          Text("Alra tv"),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: -3,
-            right: 0,
-            child: TextButton.icon(
-              icon: const FaIcon(FontAwesomeIcons.image),
-              onPressed: () {
-                saveAsImage(context);
-              },
-              label: const Text("save"),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTranslationSection(String language, String translation) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          // Text(
-          //   language,
-          //   style: const TextStyle(
-          //     fontSize: 16,
-          //     fontWeight: FontWeight.bold,
-          //     color: Colors.white,
-          //   ),
-          // ),
-          const SizedBox(height: 5),
-          Text(
-            translation,
-            textAlign: TextAlign.center,
-            textDirection:
-                language == "Urdu:" ? TextDirection.rtl : TextDirection.ltr,
-            style:
-                language == "Urdu:"
-                    ? const TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                      fontFamily: "urdu",
-                    )
-                    : const TextStyle(fontSize: 16, color: Colors.black),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Future<void> saveAsImage(BuildContext context) async {
-    try {
-      await Future.delayed(Duration.zero); // Ensure UI thread is idle
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
-        final RenderRepaintBoundary boundary =
-            _repaintBoundaryKey.currentContext!.findRenderObject()
-                as RenderRepaintBoundary;
-
-        final ui.Image image = await boundary.toImage(pixelRatio: 3.0);
-        final ByteData? byteData = await image.toByteData(
-          format: ui.ImageByteFormat.png,
-        );
-        final Uint8List pngBytes = byteData!.buffer.asUint8List();
-
-        final String timeStamp =
-            DateTime.now().millisecondsSinceEpoch.toString();
-        final String filename = 'Gohar_Shahi_$timeStamp';
-        // Gal.putImageBytes(pngBytes,album: "Download",name: filename);
-        await saveToExternalStorage(pngBytes, filename);
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Image saved as $filename'),
-            duration: const Duration(seconds: 2),
-          ),
-        );
-      });
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Error saving image: $e'),
-          duration: const Duration(seconds: 2),
-        ),
-      );
-    }
-  }
-}
 
 //  images and videos
 
@@ -421,7 +229,7 @@ class ProodFullView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Allah Ki Nishaniyan(Divine Signs)")),
-      body: Container(
+      body: SizedBox(
         width: MediaQuery.of(context).size.width,
         child: ListView(
           // spacing: 7,
@@ -581,10 +389,10 @@ class VideoPlayerScreen extends StatefulWidget {
   const VideoPlayerScreen({super.key, required this.videoUrl});
 
   @override
-  _VideoPlayerScreenState createState() => _VideoPlayerScreenState();
+  VideoPlayerScreenState createState() => VideoPlayerScreenState();
 }
 
-class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
+class VideoPlayerScreenState extends State<VideoPlayerScreen> {
   late VideoPlayerController _controller;
 
   @override
@@ -643,7 +451,7 @@ class KalkiAvatar extends StatelessWidget {
                   NeverScrollableScrollPhysics(), // Prevents nested scrolling issues
               itemCount: Kalki.data.length,
               itemBuilder: (context, idx) {
-                return ShowKalkiData(kalkiitem: Kalki.data[idx]);
+                return ZikrCardKalki(zikr: Kalki.data[idx]);
               },
             ),
           ],
@@ -653,222 +461,33 @@ class KalkiAvatar extends StatelessWidget {
   }
 }
 
-class ShowKalkiData extends StatelessWidget {
-  final Kalkidataitem kalkiitem;
+// Future<void> saveToExternalStorage(Uint8List bytes, String fileName) async {
+//   try {
+//     // Request storage permissions
+//     if (await Permission.storage.request().isGranted) {
+//       // Get external storage directory
+//       // Directory? externalDir = Directory("/storage/0/emulated/Download");
+//       // if (externalDir != null) {
+//       // final String filePath = '${externalDir.path}/$fileName';
+//       // Write the file
 
-  ShowKalkiData({super.key, required this.kalkiitem});
-
-  // GlobalKey for capturing the widget as an image
-  final GlobalKey _repaintBoundaryKey = GlobalKey();
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Stack(
-        children: [
-          RepaintBoundary(
-            key: _repaintBoundaryKey,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Container(
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Color(0xfffbed96), Color(0xffabecd6)],
-                    stops: [0, 1],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  // color: Colors.black
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: [
-                      Text(
-                        kalkiitem.reference,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue,
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      Text(
-                        kalkiitem.sanskrit,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontFamily: '',
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textDirection: TextDirection.rtl,
-                      ),
-                      const SizedBox(height: 18),
-                      const Text(
-                        'Translations:',
-                        style: TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      _buildTranslationSection(
-                        'Urdu:',
-                        kalkiitem.translation.ur,
-                      ),
-                      _buildTranslationSection(
-                        'Hindi:',
-                        kalkiitem.translation.hi,
-                      ),
-                      _buildTranslationSection(
-                        'English:',
-                        kalkiitem.translation.en,
-                      ),
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.facebook),
-                          SizedBox(width: 10),
-                          FaIcon(
-                            FontAwesomeIcons.youtube, // FontAwesome icon
-                            size: 20.0,
-                            color: Colors.black,
-                          ),
-                          SizedBox(width: 10),
-                          FaIcon(
-                            FontAwesomeIcons.twitter, // FontAwesome icon
-                            size: 20.0,
-                            color: Colors.black,
-                          ),
-                          SizedBox(width: 7),
-                          Text("Alra tv"),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: -3,
-            right: 0,
-            child: TextButton.icon(
-              icon: const FaIcon(FontAwesomeIcons.image),
-              onPressed: () {
-                saveAsImage(context);
-              },
-              label: const Text("save"),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTranslationSection(String language, String translation) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          // Text(
-          //   language,
-          //   style: const TextStyle(
-          //     fontSize: 16,
-          //     fontWeight: FontWeight.bold,
-          //     color: Colors.white,
-          //   ),
-          // ),
-          const SizedBox(height: 5),
-          Text(
-            translation,
-            textAlign: TextAlign.center,
-            textDirection:
-                language == "Urdu:" ? TextDirection.rtl : TextDirection.ltr,
-            style:
-                language == "Urdu:"
-                    ? const TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                      fontFamily: "urdu",
-                    )
-                    : const TextStyle(fontSize: 16, color: Colors.black),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Future<void> saveAsImage(BuildContext context) async {
-    try {
-      await Future.delayed(Duration.zero); // Ensure UI thread is idle
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
-        final RenderRepaintBoundary boundary =
-            _repaintBoundaryKey.currentContext!.findRenderObject()
-                as RenderRepaintBoundary;
-
-        final ui.Image image = await boundary.toImage(pixelRatio: 3.0);
-        final ByteData? byteData = await image.toByteData(
-          format: ui.ImageByteFormat.png,
-        );
-        final Uint8List pngBytes = byteData!.buffer.asUint8List();
-
-        final String timeStamp =
-            DateTime.now().millisecondsSinceEpoch.toString();
-        final String filename = 'Gohar_Shahi_$timeStamp';
-        // Gal.putImageBytes(pngBytes,album: "Download",name: filename);
-        await saveToExternalStorage(pngBytes, filename);
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Image saved as $filename'),
-            duration: const Duration(seconds: 2),
-          ),
-        );
-      });
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Error saving image: $e'),
-          duration: const Duration(seconds: 2),
-        ),
-      );
-    }
-  }
-}
-
-Future<void> saveToExternalStorage(Uint8List bytes, String fileName) async {
-  try {
-    // Request storage permissions
-    if (await Permission.storage.request().isGranted) {
-      // Get external storage directory
-      // Directory? externalDir = Directory("/storage/0/emulated/Download");
-      // if (externalDir != null) {
-      // final String filePath = '${externalDir.path}/$fileName';
-      // Write the file
-
-      Gal.putImageBytes(bytes, album: "Download", name: fileName);
-      // final File file = File(filePath);
-      // await file.writeAsBytes(bytes);
-      // print('File saved to $filePath');
-      // } else {
-      //   print('External storage directory not found');
-      // }
-    } else {
-      // print('Permission denied');
-      //   ScaffoldMessenger.of(context).showSnackBar(
-      //   const SnackBar(
-      //     content: Text('permission denied'),
-      //     duration: Duration(seconds: 2),
-      //   ),
-      // );
-    }
-  } catch (e) {
-    // print('Error saving file: $e');
-  }
-}
+//       Gal.putImageBytes(bytes, album: "Download", name: fileName);
+//       // final File file = File(filePath);
+//       // await file.writeAsBytes(bytes);
+//       // print('File saved to $filePath');
+//       // } else {
+//       //   print('External storage directory not found');
+//       // }
+//     } else {
+//       // print('Permission denied');
+//       //   ScaffoldMessenger.of(context).showSnackBar(
+//       //   const SnackBar(
+//       //     content: Text('permission denied'),
+//       //     duration: Duration(seconds: 2),
+//       //   ),
+//       // );
+//     }
+//   } catch (e) {
+//     // print('Error saving file: $e');
+//   }
+// }
