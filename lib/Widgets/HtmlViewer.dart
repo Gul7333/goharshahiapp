@@ -29,15 +29,10 @@ class Inappwebview extends StatelessWidget {
 
 
 
-
-
-
-
-
 class SimpleWebView extends StatefulWidget {
   final String url;
 
-  const SimpleWebView({Key? key, required this.url}) : super(key: key);
+  const SimpleWebView({super.key, required this.url});
 
   @override
   State<SimpleWebView> createState() => _SimpleWebViewState();
@@ -56,9 +51,8 @@ class _SimpleWebViewState extends State<SimpleWebView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('WebView')),
-      body: WebViewWidget(controller: _controller),
-    );
+    return 
+    WebViewWidget(controller: _controller);
+  
   }
 }

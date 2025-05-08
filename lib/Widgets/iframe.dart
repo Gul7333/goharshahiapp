@@ -1,1 +1,1 @@
-export 'iframe_stub.dart' if (dart.library.html) 'iframe_web.dart';
+// export 'iframe_stub.dart' if (dart.tool.dart2wasm) 'iframe_web.dart';

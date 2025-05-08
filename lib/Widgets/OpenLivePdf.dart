@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gohar_shahi/Helper/DownloadandSave.dart';
-import 'package:gohar_shahi/Widgets/iframe.dart';
+import 'package:gohar_shahi/Widgets/iframe_web.dart';
+// Import both versions
+// import 'iframe_stub.dart' if (kIsWeb) 'iframe_web.dart';
 import 'package:pdfrx/pdfrx.dart';
 import 'package:percent_indicator/flutter_percent_indicator.dart';
 
@@ -144,10 +146,10 @@ class _PdffullviewState extends State<Pdffullview> {
     // return IframeWidget(
     //   url: "https://drive.google.com/file/d/1lg8EXNwx6i8dh43w4Iq-6C7ElAVh6UbK/preview"
     // );
-
-    return kIsWeb
-        ? IframeWidget(url: getDrivePreviewUrl(widget.pdf.path!))
-        : PdfViewer.file((widget.pdf.path!),
+if(kIsWeb){
+  return IframeWidget(url: getDrivePreviewUrl(widget.pdf.path!));
+}
+    return PdfViewer.file((widget.pdf.path!),
         controller: _controller, // <-- Add this line
         params: PdfViewerParams(
           errorBannerBuilder: (context, error, stackTrace, documentRef) => Center(child: Text(error.toString()),),
