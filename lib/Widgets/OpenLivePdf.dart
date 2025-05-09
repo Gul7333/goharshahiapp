@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gohar_shahi/Helper/DownloadandSave.dart';
 // import 'package:gohar_shahi/Widgets/Livepdfrx.dart';
-import 'package:gohar_shahi/Widgets/iframe.dart';
+import 'package:gohar_shahi/Widgets/iframe_web.dart';
 
 import 'package:pdfrx/pdfrx.dart';
 import 'package:percent_indicator/flutter_percent_indicator.dart';
