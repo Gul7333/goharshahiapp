@@ -10,18 +10,20 @@ class Inappwebview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-         body: kIsWeb
-          ? Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  openLinK(url); // Open in browser for web
-                },
-                child: Text('Open Linktree in Browser'),
-              ),
-            )
-          : SimpleWebView(url: url)
-            
+    return SafeArea(
+      child: Scaffold(
+           body: kIsWeb
+            ? Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    openLinK(url); // Open in browser for web
+                  },
+                  child: Text('Open Linktree in Browser'),
+                ),
+              )
+            : SimpleWebView(url: url)
+              
+      ),
     );
   }
 }

@@ -46,13 +46,13 @@ ${zikr.arabic}
           children: [
             Text(
               zikr.reference,
-              textAlign: TextAlign.center,
+              // textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 12),
             Text(
               zikr.arabic,
-              textAlign: TextAlign.right,
+              textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.w600,

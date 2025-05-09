@@ -34,114 +34,84 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           themeMode: mode,
-          theme: ThemeData(
-            brightness: Brightness.light,
-            useMaterial3: true,
-            scaffoldBackgroundColor: Color(0xFFF5F8FF),
-            appBarTheme: const AppBarTheme(
-              backgroundColor: Color(0xFF3F51B5), // Blue Indigo
-              foregroundColor: Colors.white,
-              centerTitle: true,
-              elevation: 0,
-              titleTextStyle: TextStyle(
-                fontSize: 20,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-              backgroundColor: Color(0xFFE8F0FF),
-              selectedItemColor: Color(0xFF3F51B5), // Match primary
-              unselectedItemColor: Color(0xFF8FA8C8),
-              selectedIconTheme: IconThemeData(size: 28),
-              type: BottomNavigationBarType.fixed,
-              showSelectedLabels: true,
-              showUnselectedLabels: true,
-            ),
-            colorScheme: ColorScheme.fromSeed(
-              seedColor: Color(0xFF3F51B5),
-              brightness: Brightness.light,
-            ),
-            textTheme: const TextTheme(
-              bodyLarge: TextStyle(color: Colors.black),
-              bodyMedium: TextStyle(color: Colors.black),
-              titleLarge: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
-            ),
-            inputDecorationTheme: InputDecorationTheme(
-              hintStyle: TextStyle(color: Colors.grey.shade600),
-              prefixIconColor: Colors.grey.shade700,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(color: Colors.white, width: 1.5),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(color: Color(0xFF3F51B5), width: 2),
-              ),
-            ),
-          ),
-          darkTheme: ThemeData(
-            brightness: Brightness.dark,
-            useMaterial3: true,
-            scaffoldBackgroundColor: Color(0xFF121A2E),
+         theme: ThemeData(
+  brightness: Brightness.light,
+  useMaterial3: true,
+  scaffoldBackgroundColor: Color(0xFFFFF5F5), // Very light red/pinkish
+  appBarTheme: const AppBarTheme(
+    backgroundColor: Color(0xFFD32F2F), // Deep red
+    foregroundColor: Colors.white,
+    centerTitle: true,
+    elevation: 0,
+    titleTextStyle: TextStyle(
+      fontSize: 20,
+      color: Colors.white,
+      fontWeight: FontWeight.bold,
+    ),
+  ),
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+    backgroundColor: Color(0xFFFFEBEE), // Light red background
+    selectedItemColor: Color(0xFFD32F2F), // Match primary (deep red)
+    unselectedItemColor: Color(0xFFB71C1C), // Dark red
+    selectedIconTheme: IconThemeData(size: 28),
+    type: BottomNavigationBarType.fixed,
+    showSelectedLabels: true,
+    showUnselectedLabels: true,
+  ),
+  colorScheme: ColorScheme.fromSeed(
+    seedColor: Color(0xFFD32F2F),
+    brightness: Brightness.light,
+  ),
+  textTheme: const TextTheme(
+    bodyLarge: TextStyle(color: Colors.black87),
+    bodyMedium: TextStyle(color: Colors.black87),
+    titleLarge: TextStyle(
+      color: Colors.black87,
+      fontWeight: FontWeight.bold,
+      fontSize: 20,
+    ),
+  ),
+),
 
-            appBarTheme: const AppBarTheme(
-              backgroundColor: Color(0xFF1A237E),
-              foregroundColor: Colors.white,
-              centerTitle: true,
-              elevation: 0,
-              titleTextStyle: TextStyle(
-                fontSize: 20,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+darkTheme: ThemeData(
+  brightness: Brightness.dark,
+  useMaterial3: true,
+  scaffoldBackgroundColor: Color(0xFF1B0C0C), // Dark reddish background
+  appBarTheme: const AppBarTheme(
+    backgroundColor: Color(0xFF8B0000), // Dark red
+    foregroundColor: Colors.white,
+    centerTitle: true,
+    elevation: 0,
+    titleTextStyle: TextStyle(
+      fontSize: 20,
+      color: Colors.white,
+      fontWeight: FontWeight.bold,
+    ),
+  ),
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+    backgroundColor: Color(0xFF2C1A1A),
+    selectedItemColor: Color(0xFFFF6F61), // Soft coral/red
+    unselectedItemColor: Colors.white60,
+    selectedIconTheme: IconThemeData(size: 28),
+    type: BottomNavigationBarType.fixed,
+    showSelectedLabels: true,
+    showUnselectedLabels: true,
+  ),
+  colorScheme: ColorScheme.fromSeed(
+    seedColor: Color(0xFFD32F2F),
+    brightness: Brightness.dark,
+  ),
+  textTheme: const TextTheme(
+    bodyLarge: TextStyle(color: Colors.white),
+    bodyMedium: TextStyle(color: Colors.white),
+    titleLarge: TextStyle(
+      color: Colors.white,
+      fontWeight: FontWeight.bold,
+      fontSize: 20,
+    ),
+  ),
+),
 
-            bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-              backgroundColor: Color(0xFF1C2238),
-              selectedItemColor: Color(0xFF90CAF9),
-              unselectedItemColor: Colors.white60,
-              selectedIconTheme: IconThemeData(size: 28),
-              type: BottomNavigationBarType.fixed,
-              showSelectedLabels: true,
-              showUnselectedLabels: true,
-            ),
-            colorScheme: ColorScheme.fromSeed(
-              seedColor: Color(0xFF3F51B5),
-              brightness: Brightness.dark,
-            ),
-            textTheme: const TextTheme(
-              bodyLarge: TextStyle(color: Colors.white),
-              bodyMedium: TextStyle(color: Colors.white),
-              titleLarge: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
-            ),
-            inputDecorationTheme: InputDecorationTheme(
-              hintStyle: TextStyle(color: Colors.white70),
-              prefixIconColor: Colors.white70,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(color: Colors.white38, width: 1.5),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(color: Color(0xFF90CAF9), width: 2),
-              ),
-            ),
-          ),
           home: const MainScreen(),
         );
       },

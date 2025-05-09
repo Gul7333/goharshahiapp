@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gohar_shahi/Helper/fetchJson.dart';
@@ -14,6 +13,7 @@ class Otherscreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     final items = [
       {
         'title': 'Prayers',
@@ -44,6 +44,7 @@ class Otherscreen extends StatelessWidget {
         'onTap': () => Navigator.of(context).push(createDropFadeRoute(Inappwebview(url: "https://linktr.ee/alratv"))),
       },
     ];
+
 
     return Scaffold(
       appBar: AppBar(

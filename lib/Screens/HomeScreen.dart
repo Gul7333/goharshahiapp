@@ -115,17 +115,17 @@ Widget build(BuildContext context) {
           pinned: true,
           flexibleSpace: LayoutBuilder(
             builder: (context, constraints) {
-              final double progress = (1.0 -
-                      (constraints.maxHeight - kToolbarHeight) / 200.0)
-                  .clamp(0.0, 1.0);
+              // final double progress = (1.0 -
+              //         (constraints.maxHeight - kToolbarHeight) / 200.0)
+              //     .clamp(0.0, 1.0);
 
-              // Dynamic color based on scroll progress
-              final Color titleColor = Color.lerp(
-                    theme.colorScheme.onPrimary,
-                    Colors.white,
-                    progress,
-                  ) ??
-                  theme.colorScheme.onSurface;
+              // // Dynamic color based on scroll progress
+              // final Color titleColor = Color.lerp(
+              //       theme.colorScheme.onPrimary,
+              //       Colors.white,
+              //       progress,
+              //     ) ??
+              //     theme.colorScheme.onSurface;
 
               return FlexibleSpaceBar(
                 stretchModes: const [
@@ -137,7 +137,7 @@ Widget build(BuildContext context) {
                   "Riaz Ahmed Gohar Shahi",
                   style: textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: titleColor,
+                    color: Colors.white,
                   ),
                 ),
                 expandedTitleScale: 1.2,

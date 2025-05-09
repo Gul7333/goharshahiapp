@@ -67,7 +67,7 @@ final Map<String, Map<String, dynamic>> pdfData = {
   },
   "Deen e Ilahi Kashmiri": {
     "url":
-        "https://drive.usercontent.google.com/u/0/uc?id=1MOJ2N80LoPHLSiW3-Cx5MEnt97OsF6gi&export=download",
+        "https://raw.githubusercontent.com/Gul7333/Gohar-Shahi/main/books/Deen%20e%20Ilahi%20Kashmiri.pdf",
     "isAsset": false,
     "thumbnail": "assets/thumbnails/deen-ilahi-kashmiri-min.png",
   },

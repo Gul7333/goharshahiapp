@@ -1,7 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gohar_shahi/Helper/DownloadandSave.dart';
-import 'package:gohar_shahi/Widgets/iframe_web.dart';
+// import 'package:gohar_shahi/Widgets/Livepdfrx.dart';
+import 'package:gohar_shahi/Widgets/iframe.dart';
 
 import 'package:pdfrx/pdfrx.dart';
 import 'package:percent_indicator/flutter_percent_indicator.dart';
@@ -17,8 +18,7 @@ class OpenPdf extends StatefulWidget {
 }
 
 class _OpenPdfState extends State<OpenPdf> {
-  //  String pdfUrl = "https://drive.google.com/uc?export=download&id=1m5a6DbUFZbzG1Dl3WCexutN_UuiaViQk"; // Replace with actual URL
-  // String fileName = "sample5.pdf";
+  
   double progress = 0.0;
   int? totalSize;
   bool isLoading = true;
@@ -111,6 +111,7 @@ class Pdffullview extends StatefulWidget {
   @override
   State<Pdffullview> createState() => _PdffullviewState();
 }
+
 String getDrivePreviewUrl(String originalUrl) {
   String? fileId;
 
@@ -147,6 +148,8 @@ class _PdffullviewState extends State<Pdffullview> {
     // );
 if(kIsWeb){
   return IframeWidget(url: getDrivePreviewUrl(widget.pdf.path!));
+  
+  // return Livepdfrx(url: widget.pdf.path!);
 }
     return PdfViewer.file((widget.pdf.path!),
         controller: _controller, // <-- Add this line
