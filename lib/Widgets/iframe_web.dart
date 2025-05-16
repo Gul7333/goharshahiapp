@@ -1,4 +1,5 @@
 import 'dart:ui_web' as ui_web;
+import 'package:flutter/foundation.dart';
 import 'package:web/web.dart' as web;
 import 'package:flutter/widgets.dart';
 
@@ -20,7 +21,7 @@ class IframeWidget extends StatelessWidget {
 
     // Register a view factory for the given URL only once
     // (This is safe because Flutter web caches view factories by viewType)
-    ui_web.platformViewRegistry.registerViewFactory(
+    kIsWeb && ui_web.platformViewRegistry.registerViewFactory(
       viewType,
       (int viewId) {
         final iframe = web.HTMLIFrameElement()
@@ -32,10 +33,10 @@ class IframeWidget extends StatelessWidget {
       },
     );
 
-    return SizedBox(
+    return  SizedBox(
       width: width,
       height: height,
-      child: HtmlElementView(viewType: viewType),
-    );
+   child: kIsWeb ? HtmlElementView(viewType: viewType) : null,
+    ); 
   }
 }

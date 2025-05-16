@@ -116,12 +116,19 @@ flutter:
   # see https://flutter.dev/to/font-from-package
 
 flutter_native_splash:
-  color: "#ffffff" # Background color
-  image: assets/GOHARSHAHISPLASH.png # Your splash logo (recommended 512x512 or higher)
+  image: assets/GoharShahi.png
+  color: "#f2274f" # Background color
+  # background_image: assets/GOHARSHAHISPLASH.png # Your splash logo (recommended 512x512 or higher)
   android: true
   ios: true
 
   android_12:
-    image: assets/GOHARSHAHISPLASH.png
-    icon_background_color: "#ffffff"
+    color: "#f2274f" # Background color
+
+
+    # icon_background_color: "#ffffff"
     # branding: assets/branding.png # Optional: Smaller branding at the bottom
+
+
+
+
