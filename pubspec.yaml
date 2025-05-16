@@ -116,9 +116,9 @@ flutter:
   # see https://flutter.dev/to/font-from-package
 
 flutter_native_splash:
-  # image: assets/GoharShahi.png
+  image: assets/GoharShahi.png
   color: "#f2274f" # Background color
-  background_image: assets/GoharShahi.png # Your splash logo (recommended 512x512 or higher)
+  # background_image: assets/GoharShahi.png # Your splash logo (recommended 512x512 or higher)
   android: true
   ios: true
 
