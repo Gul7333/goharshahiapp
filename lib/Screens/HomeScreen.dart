@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gohar_shahi/Data/intro.dart';
+import 'package:gohar_shahi/Helper/ThemeInitializer.dart';
 import 'package:gohar_shahi/Helper/message.dart';
 import 'package:gohar_shahi/Helper/updateNotifier.dart';
 import 'package:gohar_shahi/OtherScreens/Mp3screen.dart';
@@ -11,7 +11,6 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:gohar_shahi/Widgets/HtmlViewer.dart';
 import 'package:gohar_shahi/Widgets/LifeOfGoharShahi.dart';
 import 'package:gohar_shahi/Widgets/YounusAlGohar.dart';
-import 'package:gohar_shahi/main.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Homescreen extends StatefulWidget {
@@ -37,27 +36,8 @@ class _HomescreenState extends State<Homescreen> {
     checkForUpdate(context);
     checkForMessage(context);
   }
- void _setSystemNavigationBarColor() {
-
-    final brightness = themeNotifier.value == ThemeMode.dark
-        ? Brightness.dark
-        : themeNotifier.value == ThemeMode.light
-            ? Brightness.light
-            : WidgetsBinding.instance.platformDispatcher.platformBrightness;
-
-    final isDark = brightness == Brightness.dark;
 
 
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        statusBarIconBrightness: isDark ? Brightness.light : Brightness.dark,
-        systemNavigationBarColor: isDark ? Color(0xFF1C2238) : Color(0xFFE8F0FF),
-        systemNavigationBarIconBrightness: isDark ? Brightness.light : Brightness.dark,
-      ),
-    );
-  }
-  
   @override
   void dispose() {
     _timer?.cancel();
@@ -78,97 +58,88 @@ class _HomescreenState extends State<Homescreen> {
       }
     });
   }
-  // Function to toggle theme mode
-  void _toggleTheme() {
-    
-  final brightness = themeNotifier.value == ThemeMode.system
-      ? WidgetsBinding.instance.platformDispatcher.platformBrightness
-      : (themeNotifier.value == ThemeMode.dark ? Brightness.dark : Brightness.light);
 
-  themeNotifier.value = brightness == Brightness.dark ? ThemeMode.light : ThemeMode.dark;
+  
 
-  _setSystemNavigationBarColor();
-}
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
 
- @override
-Widget build(BuildContext context) {
-  final theme = Theme.of(context);
-  final textTheme = theme.textTheme;
-
-  return Scaffold(
-    body: CustomScrollView(
-      slivers: [
-        SliverAppBar(
-           actions: [
-          // Button to toggle theme
-          IconButton(
-            icon: Icon(
-              theme.brightness == Brightness.dark
-                  ? Icons.light_mode
-                  : Icons.dark_mode,
-            ),
-            onPressed: _toggleTheme,
-          ),
-        ],
-          collapsedHeight: kToolbarHeight,
-          expandedHeight: 460,
-          pinned: true,
-          flexibleSpace: LayoutBuilder(
-            builder: (context, constraints) {
-              // final double progress = (1.0 -
-              //         (constraints.maxHeight - kToolbarHeight) / 200.0)
-              //     .clamp(0.0, 1.0);
-
-              // // Dynamic color based on scroll progress
-              // final Color titleColor = Color.lerp(
-              //       theme.colorScheme.onPrimary,
-              //       Colors.white,
-              //       progress,
-              //     ) ??
-              //     theme.colorScheme.onSurface;
-
-              return FlexibleSpaceBar(
-                stretchModes: const [
-                  StretchMode.fadeTitle,
-                  StretchMode.zoomBackground,
-                ],
-                collapseMode: CollapseMode.parallax,
-                title: Text(
-                  "Riaz Ahmed Gohar Shahi",
-                  style: textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            actions: [
+              // Button to toggle theme
+              IconButton(
+                icon: Icon(
+                  theme.brightness == Brightness.dark
+                      ? Icons.light_mode
+                      : Icons.dark_mode,
                 ),
-                expandedTitleScale: 1.2,
-                titlePadding: const EdgeInsets.only(bottom: 14),
-                centerTitle: true,
-                background: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    // Background Image
-                    Image.asset(
-                      "assets/SarkarPicture/10.jpg",
-                      fit: BoxFit.cover,
-                    ),
+                onPressed: toggleTheme,
+              ),
+            ],
+            collapsedHeight: kToolbarHeight,
+            expandedHeight: 460,
+            pinned: true,
+            flexibleSpace: LayoutBuilder(
+              builder: (context, constraints) {
+                // final double progress = (1.0 -
+                //         (constraints.maxHeight - kToolbarHeight) / 200.0)
+                //     .clamp(0.0, 1.0);
 
-                    // Gradient Overlay
-                    Container(
-                      decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [Colors.transparent, Colors.black54],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
+                // // Dynamic color based on scroll progress
+                // final Color titleColor = Color.lerp(
+                //       theme.colorScheme.onPrimary,
+                //       Colors.white,
+                //       progress,
+                //     ) ??
+                //     theme.colorScheme.onSurface;
+
+                return FlexibleSpaceBar(
+                  stretchModes: const [
+                    StretchMode.fadeTitle,
+                    StretchMode.zoomBackground,
+                  ],
+                  collapseMode: CollapseMode.parallax,
+                  title: Text(
+                    "Riaz Ahmed Gohar Shahi",
+                    style: textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  expandedTitleScale: 1.2,
+                  titlePadding: const EdgeInsets.only(bottom: 14),
+                  centerTitle: true,
+                  background: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      // Background Image
+                      Image.asset(
+                        "assets/SarkarPicture/10.jpg",
+                        fit: BoxFit.cover,
+                      ),
+
+                      // Gradient Overlay
+                      Container(
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [Colors.transparent, Colors.black54],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              );
-            },
+                    ],
+                  ),
+                );
+              },
+            ),
           ),
-        ),
-      
+
           // Content Below the Profile Section
           SliverToBoxAdapter(
             child: Container(
@@ -190,11 +161,15 @@ Widget build(BuildContext context) {
                         Colors.blue,
                         "https://web.facebook.com/profile.php?id=61550662965206",
                       ),
-                    InkWell(
+                      InkWell(
                         onTap: () {
-                          Navigator.of(
-                            context,
-                          ).push(createDropFadeRoute(Inappwebview(url: "https://www.youtube.com/alratv")));
+                          Navigator.of(context).push(
+                            createDropFadeRoute(
+                              Inappwebview(
+                                url: "https://www.youtube.com/alratv",
+                              ),
+                            ),
+                          );
                         },
                         child: Card(
                           elevation: 2,
@@ -307,7 +282,7 @@ Widget build(BuildContext context) {
                               ),
                             ),
                             const SizedBox(width: 16),
-                             Expanded(
+                            Expanded(
                               child: Text(
                                 "The Life Of Gohar Shahi",
                                 style: Theme.of(context).textTheme.titleMedium
@@ -411,11 +386,7 @@ Widget build(BuildContext context) {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Text(
         title,
-        style: const TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 16,
-        
-        ),
+        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
       ),
     );
   }
@@ -463,7 +434,6 @@ Widget build(BuildContext context) {
   }
 }
 
-
 class slidingtopnames extends StatelessWidget {
   const slidingtopnames({
     super.key,
@@ -505,7 +475,7 @@ Widget _introScreen(BuildContext context) {
     data: Introduction.intro,
     styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
       textAlign: WrapAlignment.center,
-      h2: const TextStyle( fontWeight: FontWeight.bold),
+      h2: const TextStyle(fontWeight: FontWeight.bold),
       h3: const TextStyle(fontWeight: FontWeight.bold),
     ),
   );
