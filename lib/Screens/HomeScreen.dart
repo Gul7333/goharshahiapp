@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gohar_shahi/Data/intro.dart';
 import 'package:gohar_shahi/Helper/ThemeInitializer.dart';
+import 'package:gohar_shahi/Helper/lauchUrl.dart';
 import 'package:gohar_shahi/Helper/message.dart';
 import 'package:gohar_shahi/Helper/updateNotifier.dart';
 import 'package:gohar_shahi/OtherScreens/Mp3screen.dart';
@@ -69,6 +70,9 @@ class _HomescreenState extends State<Homescreen> {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
+
+
+
           SliverAppBar(
             actions: [
               // Button to toggle theme
@@ -84,59 +88,43 @@ class _HomescreenState extends State<Homescreen> {
             collapsedHeight: kToolbarHeight,
             expandedHeight: 460,
             pinned: true,
-            flexibleSpace: LayoutBuilder(
-              builder: (context, constraints) {
-                // final double progress = (1.0 -
-                //         (constraints.maxHeight - kToolbarHeight) / 200.0)
-                //     .clamp(0.0, 1.0);
-
-                // // Dynamic color based on scroll progress
-                // final Color titleColor = Color.lerp(
-                //       theme.colorScheme.onPrimary,
-                //       Colors.white,
-                //       progress,
-                //     ) ??
-                //     theme.colorScheme.onSurface;
-
-                return FlexibleSpaceBar(
-                  stretchModes: const [
-                    StretchMode.fadeTitle,
-                    StretchMode.zoomBackground,
-                  ],
-                  collapseMode: CollapseMode.parallax,
-                  title: Text(
-                    "Riaz Ahmed Gohar Shahi",
-                    style: textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+            flexibleSpace: FlexibleSpaceBar(
+              stretchModes: const [
+                StretchMode.fadeTitle,
+                StretchMode.zoomBackground,
+              ],
+              collapseMode: CollapseMode.parallax,
+              title: Text(
+                "Riaz Ahmed Gohar Shahi",
+                style: textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              expandedTitleScale: 1.2,
+              titlePadding: const EdgeInsets.only(bottom: 14),
+              centerTitle: true,
+              background: Stack(
+                fit: StackFit.expand,
+                children: [
+                  // Background Image
+                  Image.asset(
+                    "assets/SarkarPicture/10.jpg",
+                    fit: BoxFit.cover,
+                  ),
+            
+                  // Gradient Overlay
+                  Container(
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [Colors.transparent, Colors.black54],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
                     ),
                   ),
-                  expandedTitleScale: 1.2,
-                  titlePadding: const EdgeInsets.only(bottom: 14),
-                  centerTitle: true,
-                  background: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      // Background Image
-                      Image.asset(
-                        "assets/SarkarPicture/10.jpg",
-                        fit: BoxFit.cover,
-                      ),
-
-                      // Gradient Overlay
-                      Container(
-                        decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [Colors.transparent, Colors.black54],
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
+                ],
+              ),
             ),
           ),
 
@@ -365,7 +353,7 @@ class _HomescreenState extends State<Homescreen> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: InkWell(
           onTap: () {
-            openLink(Url);
+            openLinK(Url);
           },
           child: Container(
             padding: const EdgeInsets.all(12.0),
@@ -417,7 +405,7 @@ class _HomescreenState extends State<Homescreen> {
             throw "Could not launch email client";
           }
         } else {
-          openLink(url);
+          openLinK(url);
         }
       },
       icon: Icon(icon, size: 16, color: Colors.white),
@@ -481,13 +469,4 @@ Widget _introScreen(BuildContext context) {
   );
 }
 
-// Function to open the URL
-Future<void> openLink(String url) async {
-  Uri uri = Uri.parse(url);
-  // Check if the URL can be launched
-  if (await canLaunchUrl(uri)) {
-    await launchUrl(uri, mode: LaunchMode.externalApplication);
-  } else {
-    throw "Could not launch $url";
-  }
-}
+

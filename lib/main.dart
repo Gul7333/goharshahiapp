@@ -16,7 +16,7 @@ final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.system);
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
   fvp.registerWith(); // Register FVP before creating any player
-    setTheme();
+    setSystemNavigationBarColor();
 
   tz.initializeTimeZones();
   // Enable Pdfium WASM support
@@ -155,6 +155,7 @@ class _MainScreenState extends State<MainScreen> {
     final colorScheme = theme.colorScheme;
 
     return Scaffold(
+    
       body: IndexedStack(index: _selectedIndex, children: _screens),
       bottomNavigationBar: NavigationBar(
         height: 60, // Adjust the height to your desired value (e.g., 50px)

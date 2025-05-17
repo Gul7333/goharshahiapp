@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gohar_shahi/Helper/DownloadandSave.dart';
+import 'package:gohar_shahi/Helper/shared_prefs_helper.dart';
 // import 'package:gohar_shahi/Widgets/Livepdfrx.dart';
 import 'package:gohar_shahi/Widgets/iframe_stub.dart';
 
@@ -136,7 +139,33 @@ String getDrivePreviewUrl(String originalUrl) {
 }
 
 class _PdffullviewState extends State<Pdffullview> {
+  int _initialPage = 0;
   final PdfViewerController _controller = PdfViewerController();
+
+  Future<void> _loadLastPage() async {
+    if (!mounted) return;
+
+    final page = await SharedPrefsHelper.getInt('lastPage_${widget.name}') ?? 0;
+
+    setState(() {
+      _initialPage = page;
+    });
+  }
+
+  void _saveCurrentPage() {
+    if (!mounted) return;
+
+    final page = _controller.pageNumber ?? _initialPage;
+    SharedPrefsHelper.setInt('lastPage_${widget.name}', page);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _loadLastPage();
+    _controller.addListener(_saveCurrentPage);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -151,6 +180,7 @@ class _PdffullviewState extends State<Pdffullview> {
     return PdfViewer.file(
       (widget.pdf.path!),
       controller: _controller, // <-- Add this line
+      initialPageNumber: _initialPage,
       params: PdfViewerParams(
         errorBannerBuilder:
             (context, error, stackTrace, documentRef) =>
@@ -170,7 +200,7 @@ class _PdffullviewState extends State<Pdffullview> {
                 thumbSize: const Size(40, 25),
                 thumbBuilder:
                     (context, thumbSize, pageNumber, controller) => Container(
-                      color: Colors.black,
+                      color: Colors.redAccent,
                       // Show page number on the thumb
                       child: Center(
                         child: Text(
@@ -181,14 +211,7 @@ class _PdffullviewState extends State<Pdffullview> {
                     ),
               ),
               // Add horizontal scroll thumb on viewer's bottom
-              PdfViewerScrollThumb(
-                controller: _controller,
-                orientation: ScrollbarOrientation.bottom,
-                thumbSize: const Size(45, 25),
-                thumbBuilder:
-                    (context, thumbSize, pageNumber, controller) =>
-                        Container(color: Colors.black38),
-              ),
+            
             ],
       ),
     );

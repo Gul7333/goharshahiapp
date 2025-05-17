@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gohar_shahi/Helper/lauchUrl.dart';
+import 'package:gohar_shahi/Helper/shared_prefs_helper.dart';
 import 'package:pdfrx/pdfrx.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ReadBookScreen extends StatefulWidget {
   final String bookUrl;
@@ -17,32 +18,28 @@ class ReadBookScreen extends StatefulWidget {
 
 class _ReadBookScreenState extends State<ReadBookScreen> {
   final PdfViewerController _controller = PdfViewerController();
-
-  // final GlobalKey<SfPdfViewerState> _pdfViewerKey = GlobalKey();
+  int _initialPage = 0;
+  // String get _prefsKey => 'lastPage_${widget.bookTitle}';
 
   @override
   void initState() {
     super.initState();
-    //      pdfController = PdfController(
-    //   document: PdfDocument.openAsset(widget.bookUrl),
-    //   viewportFraction: 0.6,
-
-    // );
+    _loadLastPage();
+    _controller.addListener(_saveCurrentPage);
   }
 
-  // Function to open the URL
-  Future<void> _openLink(String url) async {
-    Uri uri = Uri.parse(url);
-    // Check if the URL can be launched
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    } else {
-      throw "Could not launch $url";
-    }
-  }
-
+ Future<void> _loadLastPage() async {
+  final page = await SharedPrefsHelper.getInt('lastPage_${widget.bookTitle}') ?? 0;
+  setState(() {
+    _initialPage = page;
+  });
+}
+ void _saveCurrentPage() {
+  SharedPrefsHelper.setInt('lastPage_${widget.bookTitle}', _controller.pageNumber ?? _initialPage);
+}
   @override
   void dispose() {
+    _controller.removeListener(_saveCurrentPage);
     super.dispose();
   }
 
@@ -56,61 +53,43 @@ class _ReadBookScreenState extends State<ReadBookScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              _openLink("https://gohar-shahi.com/books.html");
+              openLinK("https://gohar-shahi.com/books.html");
             },
             icon: const Icon(Icons.download),
           ),
         ],
       ),
-      // body: SfPdfViewer.asset(widget.bookUrl,controller: _controller,key: _pdfViewerKey,)
       body: PdfViewer.asset(
         controller: _controller,
+        initialPageNumber: _initialPage,
         widget.bookUrl,
         params: PdfViewerParams(
-          loadingBannerBuilder: (context, bytesDownloaded, totalBytes) {
-          
-
-            return Center(
-           child:CircularProgressIndicator(),
-            );
-          },
-
+          loadingBannerBuilder: (context, _, __) =>
+              const Center(child: CircularProgressIndicator()),
           scaleEnabled: true,
           enableTextSelection: true,
           enableKeyboardNavigation: true,
           scrollByArrowKey: 100,
           verticalCacheExtent: 1,
           scrollByMouseWheel: 5,
-          viewerOverlayBuilder:
-              (context, size, handleLinkTap) => [
-                // Add vertical scroll thumb on viewer's right side
-                PdfViewerScrollThumb(
-                  controller: _controller,
-                  orientation: ScrollbarOrientation.right,
-                  thumbSize: const Size(40, 25),
-                  thumbBuilder:
-                      (context, thumbSize, pageNumber, controller) => Container(
-                        color: Colors.black,
-                        // Show page number on the thumb
-                        child: Center(
-                          child: Text(
-                            pageNumber.toString(),
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
+          viewerOverlayBuilder: (context, size, handleLinkTap) => [
+            PdfViewerScrollThumb(
+              controller: _controller,
+              orientation: ScrollbarOrientation.right,
+              thumbSize: const Size(40, 25),
+              thumbBuilder: (context, thumbSize, pageNumber, controller) =>
+                  Container(
+                color: Colors.redAccent,
+                child: Center(
+                  child: Text(
+                    pageNumber.toString(),
+                    style: const TextStyle(color: Colors.white),
+                  ),
                 ),
-                // Add horizontal scroll thumb on viewer's bottom
-                PdfViewerScrollThumb(
-                  controller: _controller,
-                  orientation: ScrollbarOrientation.bottom,
-                  thumbSize: const Size(45, 25),
-                  thumbBuilder:
-                      (context, thumbSize, pageNumber, controller) => Container(
-                        color: const Color.fromARGB(255, 39, 38, 37),
-                      ),
-                ),
-              ],
+              ),
+            ),
+          
+          ],
         ),
       ),
     );

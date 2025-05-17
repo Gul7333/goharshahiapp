@@ -19,7 +19,7 @@ class Gallery extends StatelessWidget {
           onTap: (){
             Navigator.of(context).push(createDropFadeRoute(FullImageView(ind: idx,)));
           },
-          child: Image.asset("assets/SarkarPicture/${arro[idx]}",fit: BoxFit.cover,));
+          child: Image.asset("assets/SarkarPicture/${arro[idx]}",fit: BoxFit.cover,cacheWidth: (MediaQuery.of(context).size.width / 4).toInt(),));
       })
     );
   }
