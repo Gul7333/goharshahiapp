@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gohar_shahi/OtherScreens/PdfAssetView.dart';
+import 'package:gohar_shahi/Widgets/Livepdfrx.dart';
 import 'package:gohar_shahi/Widgets/OpenLivePdf.dart';
 
 final RouteObserver<ModalRoute<void>> routeObserver =
@@ -99,19 +100,12 @@ class BookScreenState extends State<BookScreen> {
     super.initState();
   }
 
-  KeyEventResult _handleKeyEvent(FocusNode node, KeyEvent event) {
-    // Check if the back key is pressed
-    if (event is KeyDownEvent &&
-        event.logicalKey == LogicalKeyboardKey.goBack) {
-      searchFocus.unfocus(); // Hide keyboard
-      return KeyEventResult.handled;
-    }
-    return KeyEventResult.ignored;
-  }
+  
 
   void openBook(bool isAsset, String title, String pdfUrl) {
     // FocusScope.of(context).unfocus();
     searchFocus.unfocus();
+   
     if (isAsset) {
       Navigator.push(
         context,
@@ -122,7 +116,8 @@ class BookScreenState extends State<BookScreen> {
     } else {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (_) => OpenPdf(name: title, pdfUrl: pdfUrl)),
+        // here i am using live pdfrx as link are not cors restricted
+        MaterialPageRoute(builder: (_) => Livepdfrx(name: title, url: pdfUrl)),
       );
     }
   }

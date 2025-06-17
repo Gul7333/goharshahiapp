@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:gohar_shahi/Helper/DownloadandSave.dart';
 import 'package:gohar_shahi/Helper/shared_prefs_helper.dart';
 // import 'package:gohar_shahi/Widgets/Livepdfrx.dart';
-import 'package:gohar_shahi/Widgets/iframe_web.dart';
+import 'package:gohar_shahi/Widgets/iframe_stub.dart';
 
 import 'package:pdfrx/pdfrx.dart';
 import 'package:percent_indicator/flutter_percent_indicator.dart';
@@ -161,7 +161,6 @@ class _PdffullviewState extends State<Pdffullview> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _loadLastPage();
     _controller.addListener(_saveCurrentPage);
@@ -173,25 +172,62 @@ class _PdffullviewState extends State<Pdffullview> {
     //   url: "https://drive.google.com/file/d/1lg8EXNwx6i8dh43w4Iq-6C7ElAVh6UbK/preview"
     // );
     if (kIsWeb) {
+      debugPrint("-------------------------------");
+      // it make url of drive to preview url
       return IframeWidget(url: getDrivePreviewUrl(widget.pdf.path!));
 
       // return Livepdfrx(url: widget.pdf.path!);
     }
-    return PdfViewer.file(
-      (widget.pdf.path!),
-      controller: _controller, // <-- Add this line
-      initialPageNumber: _initialPage,
-      params: PdfViewerParams(
-        errorBannerBuilder:
-            (context, error, stackTrace, documentRef) =>
-                Center(child: Text(error.toString())),
-        scaleEnabled: true,
-        enableTextSelection: true,
-        enableKeyboardNavigation: true,
-        scrollByArrowKey: 50,
-        verticalCacheExtent: 1,
-        scrollByMouseWheel: 5,
-        viewerOverlayBuilder:
+    return Filepdf(filepath: widget.pdf.path!,name: widget.name,);
+  }
+}
+
+
+
+
+class Filepdf extends StatefulWidget {
+  final String filepath;
+  final String name;
+  const Filepdf({super.key, required this.filepath, required this.name});
+
+  @override
+  State<Filepdf> createState() => _FilepdfState();
+}
+
+class _FilepdfState extends State<Filepdf> {
+  int _initialPage = 0;
+  final PdfViewerController _controller = PdfViewerController();
+  Future<void> _loadLastPage() async {
+    if (!mounted) return;
+
+    final page = await SharedPrefsHelper.getInt('lastPage_${widget.name}') ?? 0;
+
+    setState(() {
+      _initialPage = page;
+    });
+  }
+
+  void _saveCurrentPage() {
+    if (!mounted) return;
+
+    final page = _controller.pageNumber ?? _initialPage;
+    SharedPrefsHelper.setInt('lastPage_${widget.name}', page);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadLastPage();
+    _controller.addListener(_saveCurrentPage);
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return PdfViewer.file(widget.filepath,
+    
+    params: PdfViewerParams(
+      viewerOverlayBuilder:
             (context, size, handleLinkTap) => [
               // Add vertical scroll thumb on viewer's right side
               PdfViewerScrollThumb(
@@ -214,6 +250,7 @@ class _PdffullviewState extends State<Pdffullview> {
             
             ],
       ),
+
     );
   }
 }

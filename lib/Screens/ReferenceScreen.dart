@@ -119,16 +119,16 @@ class Referencescreen extends StatelessWidget {
             grad: 1,
           ),
 
-          BeautifulListTile(
-            icon: FontAwesomeIcons.moon,
-            title: "Divine Signs",
-            subtitle: "Images and Videos",
-            reference: "",
-            onTap: () {
-              Navigator.of(context).push(createDropFadeRoute(ProodFullView()));
-            },
-            grad: 1,
-          ),
+          // BeautifulListTile(
+          //   icon: FontAwesomeIcons.moon,
+          //   title: "Divine Signs",
+          //   subtitle: "Images and Videos",
+          //   reference: "",
+          //   onTap: () {
+          //     Navigator.of(context).push(createDropFadeRoute(ProodFullView()));
+          //   },
+          //   grad: 1,
+          // ),
           // const BeautifulListTile(title: "Importance Of Tareeqat", subtitle: "Rah e Tareeqat ki Ahmiyat", reference: "20"),
           // const BeautifulListTile(title: "Importance Of Spritual bodies", subtitle: "Lataif ki Ahmiyat", reference: "20")
         ],
@@ -290,6 +290,7 @@ class ProodFullView extends StatelessWidget {
               fit: BoxFit.cover,
               alignment: Alignment.center,
             ),
+
             InkWell(
               onTap:
                   () => Navigator.of(context).push(
