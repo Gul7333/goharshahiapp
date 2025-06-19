@@ -56,7 +56,7 @@ class Gallery extends StatelessWidget {
           child: Image.asset(
             "$assetPath${images[idx]}",
             fit: BoxFit.cover,
-            cacheWidth: (MediaQuery.of(context).size.width / 4).toInt(),
+            // cacheWidth: (MediaQuery.of(context).size.width / 4).toInt(),
           ),
         );
       }, childCount: images.length),

@@ -16,10 +16,11 @@ import 'package:url_launcher/url_launcher.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
-
   @override
   State<Homescreen> createState() => _HomescreenState();
 }
+
+
 
 class _HomescreenState extends State<Homescreen> {
   final List<String> texts = [
@@ -34,8 +35,8 @@ class _HomescreenState extends State<Homescreen> {
   void initState() {
     super.initState();
     _startAutoPlay();
-    checkForUpdate(context);
-    checkForMessage(context);
+    // checkForUpdate(context);
+    // checkForMessage(context);
   }
 
 

@@ -4,47 +4,68 @@ import 'package:gohar_shahi/Helper/fetchJson.dart';
 import 'package:gohar_shahi/OtherScreens/Websites.dart';
 import 'package:gohar_shahi/RouteAnimation/FadeAnimations.dart';
 import 'package:gohar_shahi/Screens/PrayerScreen.dart';
+import 'package:gohar_shahi/Widgets/AbjadCalculator.dart';
 import 'package:gohar_shahi/Widgets/HtmlViewer.dart';
 import 'package:gohar_shahi/Widgets/OpenLivePdf.dart';
-
 
 class Otherscreen extends StatelessWidget {
   const Otherscreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     final items = [
       {
         'title': 'Prayers',
         'subtitle': 'Prayer times',
         'icon': FontAwesomeIcons.handsPraying,
         'color': Colors.orange,
-        'onTap': () => Navigator.of(context).push(createDropFadeRoute(PrayerScreen())),
+        'onTap':
+            () =>
+                Navigator.of(context).push(createDropFadeRoute(PrayerScreen())),
       },
       {
         'title': 'More books',
         'subtitle': 'Some important books',
         'icon': FontAwesomeIcons.book,
         'color': Colors.teal,
-        'onTap': () => Navigator.of(context).push(createDropFadeRoute(PDFHome())),
+        'onTap':
+            () => Navigator.of(context).push(createDropFadeRoute(PDFHome())),
       },
       {
         'title': 'Official websites',
         'subtitle': 'Links of Official websites',
         'icon': FontAwesomeIcons.globe,
         'color': Colors.deepPurple,
-        'onTap': () => Navigator.of(context).push(createDropFadeRoute(WebsiteScreen())),
+        'onTap':
+            () => Navigator.of(
+              context,
+            ).push(createDropFadeRoute(WebsiteScreen())),
       },
-        {
+      {
         'title': 'Official LinkTree of Alra tv',
         'subtitle': 'Links of Official websites',
         'icon': FontAwesomeIcons.link,
         'color': const Color.fromARGB(255, 83, 52, 138),
-        'onTap': () => Navigator.of(context).push(createDropFadeRoute(Inappwebview(url: "https://linktr.ee/alratv"))),
+        'onTap':
+            () => Navigator.of(context).push(
+              createDropFadeRoute(
+                Inappwebview(url: "https://linktr.ee/alratv"),
+              ),
+            ),
+      },
+       {
+        'title': 'Abjad ',
+        'subtitle': 'Calculate abjad',
+        'icon': FontAwesomeIcons.link,
+        'color': const Color.fromARGB(255, 83, 52, 138),
+        'onTap':
+            () => Navigator.of(context).push(
+              createDropFadeRoute(
+                UrduAbjadCalculator(),
+              ),
+            ),
       },
     ];
-
 
     return Scaffold(
       appBar: AppBar(
@@ -85,10 +106,7 @@ class Otherscreen extends StatelessWidget {
               contentPadding: const EdgeInsets.all(16),
               leading: CircleAvatar(
                 backgroundColor: Colors.white,
-                child: Icon(
-                  item['icon'] as IconData,
-                  color: baseColor,
-                ),
+                child: Icon(item['icon'] as IconData, color: baseColor),
               ),
               title: Text(
                 item['title'] as String,
@@ -100,13 +118,13 @@ class Otherscreen extends StatelessWidget {
               ),
               subtitle: Text(
                 item['subtitle'] as String,
-                style: const TextStyle(
-                  color: Colors.white70,
-                  fontSize: 14,
-                ),
+                style: const TextStyle(color: Colors.white70, fontSize: 14),
               ),
               onTap: item['onTap'] as void Function(),
-              trailing: const Icon(Icons.arrow_forward_ios, color: Colors.white),
+              trailing: const Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.white,
+              ),
             ),
           );
         },
@@ -115,10 +133,7 @@ class Otherscreen extends StatelessWidget {
   }
 }
 
-
 // // book screen
-
-
 
 class PDFHome extends StatefulWidget {
   @override
@@ -153,7 +168,7 @@ class _PDFHomeState extends State<PDFHome> {
                 child: Text("Error: Check Your Internet Conection"),
               );
             }
-            
+
             if (snapshot.connectionState == ConnectionState.done &&
                 snapshot.hasData) {
               final items = snapshot.data!.data;
@@ -174,14 +189,13 @@ class _PDFHomeState extends State<PDFHome> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => OpenPdf(
-                              pdfUrl: book.url,
-                              name: book.name,
-                            ),
+                            builder:
+                                (context) =>
+                                    OpenPdf(pdfUrl: book.url, name: book.name),
                           ),
                         );
                       },
-                      
+
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
@@ -199,7 +213,10 @@ class _PDFHomeState extends State<PDFHome> {
                           children: [
                             CircleAvatar(
                               backgroundColor: Colors.white,
-                              child: Icon(FontAwesomeIcons.bookOpen, color: color),
+                              child: Icon(
+                                FontAwesomeIcons.bookOpen,
+                                color: color,
+                              ),
                             ),
                             const SizedBox(width: 16),
                             Expanded(
@@ -212,7 +229,10 @@ class _PDFHomeState extends State<PDFHome> {
                                 ),
                               ),
                             ),
-                            const Icon(Icons.picture_as_pdf, color: Colors.white),
+                            const Icon(
+                              Icons.picture_as_pdf,
+                              color: Colors.white,
+                            ),
                           ],
                         ),
                       ),
@@ -229,5 +249,3 @@ class _PDFHomeState extends State<PDFHome> {
     );
   }
 }
-
-

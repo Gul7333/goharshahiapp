@@ -8,14 +8,9 @@ import 'package:gohar_shahi/main.dart';
 void toggleTheme() {
   final brightness = getbrightness();
 
-  themeNotifier.value =
-      brightness == Brightness.dark ? ThemeMode.light : ThemeMode.dark;
-
- 
+  themeNotifier.value = brightness == Brightness.dark ? ThemeMode.light : ThemeMode.dark;
   setSystemNavigationBarColor();
 }
-
-
 
 
 Brightness getbrightness() {

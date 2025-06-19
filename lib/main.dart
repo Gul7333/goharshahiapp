@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:fvp/fvp.dart' as fvp;
 import 'package:gohar_shahi/Helper/ThemeInitializer.dart';
@@ -7,7 +8,6 @@ import 'package:gohar_shahi/Screens/GalleryScreen.dart';
 import 'package:gohar_shahi/Screens/HomeScreen.dart';
 import 'package:gohar_shahi/Screens/OtherScreen.dart';
 import 'package:gohar_shahi/Screens/ReferenceScreen.dart';
-import 'package:pdfrx/pdfrx.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
 final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.system);
@@ -15,12 +15,13 @@ final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.system);
 
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+
   fvp.registerWith(); // Register FVP before creating any player
     setSystemNavigationBarColor();
 
   tz.initializeTimeZones();
   // Enable Pdfium WASM support
-  Pdfrx.webRuntimeType = PdfrxWebRuntimeType.pdfiumWasm;
   // _startBackgroundDownloads();
   runApp(const MyApp());
 }
@@ -155,6 +156,7 @@ class _MainScreenState extends State<MainScreen> {
     final colorScheme = theme.colorScheme;
 
     return Scaffold(
+      
     
       body: IndexedStack(index: _selectedIndex, children: _screens),
       bottomNavigationBar: NavigationBar(
