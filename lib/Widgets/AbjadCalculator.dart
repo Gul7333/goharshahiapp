@@ -108,7 +108,7 @@ class _UrduAbjadCalculatorState extends State<UrduAbjadCalculator> {
                       textAlign: TextAlign.justify,
                       style: TextStyle(
                         fontSize: 16,
-                        color: Colors.black87,
+                     
                         fontFamily: "urdu",
                       ),
                     ),

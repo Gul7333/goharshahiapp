@@ -60,6 +60,9 @@ class _LivepdfrxState extends State<Livepdfrx> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.name),
+      ),
       body: Center(
         child:
             isLoading

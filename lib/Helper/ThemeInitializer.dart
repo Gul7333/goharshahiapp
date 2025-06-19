@@ -32,7 +32,8 @@ void setSystemNavigationBarColor() {
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
-      statusBarIconBrightness: isDark ? Brightness.light : Brightness.dark,
+      // statusBarIconBrightness: isDark ? Brightness.light : Brightness.dark,
+      // systemNavigationBarColor: Colors.transparent,
       systemNavigationBarColor: isDark ? Color.fromARGB(255, 22, 13, 13) : Color.fromARGB(255, 253, 245, 246),
       systemNavigationBarIconBrightness:
           isDark ? Brightness.light : Brightness.dark,

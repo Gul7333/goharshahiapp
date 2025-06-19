@@ -172,18 +172,14 @@ class _PdffullviewState extends State<Pdffullview> {
     //   url: "https://drive.google.com/file/d/1lg8EXNwx6i8dh43w4Iq-6C7ElAVh6UbK/preview"
     // );
     if (kIsWeb) {
-      debugPrint("-------------------------------");
       // it make url of drive to preview url
       return IframeWidget(url: getDrivePreviewUrl(widget.pdf.path!));
 
       // return Livepdfrx(url: widget.pdf.path!);
     }
-    return Filepdf(filepath: widget.pdf.path!,name: widget.name,);
+    return Filepdf(filepath: widget.pdf.path!, name: widget.name);
   }
 }
-
-
-
 
 class Filepdf extends StatefulWidget {
   final String filepath;
@@ -199,9 +195,7 @@ class _FilepdfState extends State<Filepdf> {
   final PdfViewerController _controller = PdfViewerController();
   Future<void> _loadLastPage() async {
     if (!mounted) return;
-
     final page = await SharedPrefsHelper.getInt('lastPage_${widget.name}') ?? 0;
-
     setState(() {
       _initialPage = page;
     });
@@ -221,36 +215,33 @@ class _FilepdfState extends State<Filepdf> {
     _controller.addListener(_saveCurrentPage);
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return PdfViewer.file(widget.filepath,
-    
-    params: PdfViewerParams(
-      viewerOverlayBuilder:
-            (context, size, handleLinkTap) => [
-              // Add vertical scroll thumb on viewer's right side
-              PdfViewerScrollThumb(
-                controller: _controller,
-                orientation: ScrollbarOrientation.right,
-                thumbSize: const Size(40, 25),
-                thumbBuilder:
-                    (context, thumbSize, pageNumber, controller) => Container(
-                      color: Colors.redAccent,
-                      // Show page number on the thumb
-                      child: Center(
-                        child: Text(
-                          pageNumber.toString(),
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                      ),
-                    ),
-              ),
-              // Add horizontal scroll thumb on viewer's bottom
-            
-            ],
-      ),
+    return PdfViewer.file(
+      initialPageNumber: _initialPage,
 
+      widget.filepath,
+controller: _controller,
+      params: PdfViewerParams(
+      viewerOverlayBuilder: (context, size, handleLinkTap) => [
+            PdfViewerScrollThumb(
+              controller: _controller,
+              orientation: ScrollbarOrientation.right,
+              thumbSize: const Size(40, 25),
+              thumbBuilder: (context, thumbSize, pageNumber, controller) =>
+                  Container(
+                color: Colors.redAccent,
+                child: Center(
+                  child: Text(
+                    pageNumber.toString(),
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+          
+          ],
+      ),
     );
   }
 }

@@ -117,7 +117,7 @@ class BookScreenState extends State<BookScreen> {
       Navigator.push(
         context,
         // here i am using live pdfrx as link are not cors restricted
-        MaterialPageRoute(builder: (_) => Livepdfrx(name: title, url: pdfUrl)),
+        MaterialPageRoute(builder: (_) => OpenPdf(name: title, pdfUrl: pdfUrl,)),
       );
     }
   }

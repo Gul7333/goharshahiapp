@@ -53,7 +53,7 @@ class _ReadBookScreenState extends State<ReadBookScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              openLinK("https://gohar-shahi.com/books.html");
+              openLinK("https://gohar-shahi.com/books");
             },
             icon: const Icon(Icons.download),
           ),

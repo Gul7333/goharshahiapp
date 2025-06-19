@@ -18,11 +18,15 @@ Future<void> main(List<String> args) async {
   // SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
   fvp.registerWith(); // Register FVP before creating any player
-    setSystemNavigationBarColor();
+    // setSystemNavigationBarColor();
 
   tz.initializeTimeZones();
   // Enable Pdfium WASM support
   // _startBackgroundDownloads();
+  // Fix: Delay setting navigation bar until first frame rendered
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    setSystemNavigationBarColor();
+  });
   runApp(const MyApp());
 }
 
@@ -156,8 +160,6 @@ class _MainScreenState extends State<MainScreen> {
     final colorScheme = theme.colorScheme;
 
     return Scaffold(
-      
-    
       body: IndexedStack(index: _selectedIndex, children: _screens),
       bottomNavigationBar: NavigationBar(
         height: 60, // Adjust the height to your desired value (e.g., 50px)
