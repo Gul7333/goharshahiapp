@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gohar_shahi/RouteAnimation/FadeAnimations.dart';
 import 'package:video_player/video_player.dart';
 
@@ -16,7 +19,7 @@ class Gallery extends StatelessWidget {
           _buildSectionHeader("Sarkar Pictures"),
           _buildImageGrid(context, arro, isMoon: false),
           _buildSectionHeader("Videos"),
-          _buildVideoGrid(context, moonVideo, isMoon: true)
+          _buildVideoGrid(context, moonVideo, isMoon: true),
         ],
       ),
     );
@@ -56,7 +59,7 @@ class Gallery extends StatelessWidget {
           child: Image.asset(
             "$assetPath${images[idx]}",
             fit: BoxFit.cover,
-            // cacheWidth: (MediaQuery.of(context).size.width / 4).toInt(),
+            cacheWidth: (MediaQuery.of(context).size.width / 2).toInt(),
           ),
         );
       }, childCount: images.length),
@@ -68,17 +71,15 @@ class Gallery extends StatelessWidget {
     );
   }
 
-
   SliverGrid _buildVideoGrid(
-  BuildContext context,
-  List<String> videos, {
-  required bool isMoon,
-}) {
-  final assetPath = isMoon ? "assets/proofs/" : "assets/SarkarPicture/";
+    BuildContext context,
+    List<String> videos, {
+    required bool isMoon,
+  }) {
+    final assetPath = isMoon ? "assets/proofs/" : "assets/SarkarPicture/";
 
-  return SliverGrid(
-    delegate: SliverChildBuilderDelegate(
-      (context, idx) {
+    return SliverGrid(
+      delegate: SliverChildBuilderDelegate((context, idx) {
         final videoAsset = "$assetPath${videos[idx]}";
         final controller = VideoPlayerController.asset(videoAsset);
 
@@ -97,7 +98,7 @@ class Gallery extends StatelessWidget {
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
-                    const Icon(Icons.play_circle_fill, size: 48,),
+                    const Icon(Icons.play_circle_fill, size: 48),
                     AspectRatio(
                       aspectRatio: controller.value.aspectRatio,
                       child: Center(child: Text(videos[idx])),
@@ -110,16 +111,14 @@ class Gallery extends StatelessWidget {
             }
           },
         );
-      },
-      childCount: videos.length,
-    ),
-    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-      crossAxisCount: 4, // 4 is too tight for videos
-      mainAxisSpacing: 5,
-      crossAxisSpacing: 5,
-    ),
-  );
-}
+      }, childCount: videos.length),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 4, // 4 is too tight for videos
+        mainAxisSpacing: 5,
+        crossAxisSpacing: 5,
+      ),
+    );
+  }
 }
 
 
@@ -141,10 +140,12 @@ class FullImageView extends StatefulWidget {
 
 class _FullImageViewState extends State<FullImageView> {
   late PageController _controller;
+  int _currentIndex = 0;
 
   @override
   void initState() {
     super.initState();
+    _currentIndex = widget.ind;
     _controller = PageController(initialPage: widget.ind);
   }
 
@@ -153,6 +154,37 @@ class _FullImageViewState extends State<FullImageView> {
     _controller.dispose();
     super.dispose();
   }
+
+Future<void> _saveImage() async {
+  // final status = await Gal.hasAccess();
+  // if (!status) {
+  //   ScaffoldMessenger.of(context).showSnackBar(
+  //     const SnackBar(content: Text("Storage permission denied")),
+  //   );
+  //   return;
+  // }
+
+  final assetPath =
+      widget.isMoon ? "assets/proofs/" : "assets/SarkarPicture/";
+  final imageName = widget.images[_currentIndex];
+  final byteData = await rootBundle.load("$assetPath$imageName");
+
+  // Get Pictures directory (Gallery folder)
+  final directory = Directory("/storage/emulated/0/Pictures/Gohar Shahi App");
+  if (!await directory.exists()) {
+    await directory.create(recursive: true);
+  }
+
+  final filePath = "${directory.path}/$imageName";
+  final file = File(filePath);
+
+  await file.writeAsBytes(byteData.buffer.asUint8List());
+
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(content: Text("Saved to Gallery: $filePath")),
+  );
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -165,6 +197,11 @@ class _FullImageViewState extends State<FullImageView> {
         controller: _controller,
         pageSnapping: true,
         itemCount: widget.images.length,
+        onPageChanged: (idx) {
+          setState(() {
+            _currentIndex = idx;
+          });
+        },
         itemBuilder: (context, idx) {
           return Image.asset(
             "$assetPath${widget.images[idx]}",
@@ -172,9 +209,16 @@ class _FullImageViewState extends State<FullImageView> {
           );
         },
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _saveImage,
+        child: const Icon(Icons.save),
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+      ),
     );
   }
 }
+
 
 //  video player
 
@@ -255,6 +299,7 @@ List<String> moon = [
   "moon_6.jpg",
 ];
 List<String> arro = [
+  "122.jpg",
   "13.jpg",
   "101.jpg",
   "102.jpg",
@@ -376,4 +421,77 @@ List<String> arro = [
   "98.jpg",
   "99.jpg",
   "9.jpg",
+  "123.jpg",
+  "124.jpg",
+  "125.jpg",
+  "126.jpg",
+  "127.jpg",
+  "128.jpg",
+  "129.jpg",
+  "130.jpg",
+  "131.jpg",
+  "132.jpg",
+  "133.jpg",
+  "134.jpg",
+  "135.jpg",
+  "136.jpg",
+  "137.jpg",
+  "138.jpg",
+  "139.jpg",
+  "140.jpg",
+  "141.jpg",
+  "142.jpg",
+  "143.jpg",
+  "144.jpg",
+  "145.jpg",
+  "146.jpg",
+  "147.jpg",
+  "148.jpg",
+  "149.jpg",
+  "150.jpg",
+  "151.jpg",
+  "152.jpg",
+  "153.jpg",
+  "154.jpg",
+  "155.jpg",
+  "156.jpg",
+  "157.jpg",
+  "158.jpg",
+  "159.jpg",
+  "160.jpg",
+  "161.jpg",
+  "162.jpg",
+  "163.jpg",
+  "164.jpg",
+  "165.jpg",
+  "166.jpg",
+  "167.jpg",
+  "168.jpg",
+  "169.jpg",
+  "170.jpg",
+  "171.jpg",
+  "172.jpg",
+  "173.jpg",
+  "174.jpg",
+  "175.jpg",
+  "176.jpg",
+  "177.jpg",
+  "178.jpg",
+  "179.jpg",
+  "180.jpg",
+  "181.jpg",
+  "182.jpg",
+  "183.jpg",
+  "184.jpg",
+  "185.jpg",
+  "186.jpg",
+  "187.jpg",
+  "188.jpg",
+  "189.jpg",
+  "190.jpg",
+  "191.jpg",
+  "192.jpg",
+  "193.jpg",
+  "194.jpg",
+  "195.jpg",
 ];
