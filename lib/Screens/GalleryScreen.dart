@@ -163,6 +163,7 @@ Future<void> _saveImage() async {
   //   );
   //   return;
   // }
+  try {
 
   final assetPath =
       widget.isMoon ? "assets/proofs/" : "assets/SarkarPicture/";
@@ -181,8 +182,15 @@ Future<void> _saveImage() async {
   await file.writeAsBytes(byteData.buffer.asUint8List());
 
   ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(content: Text("Saved to Gallery: $filePath")),
+    SnackBar(content: Text("Saved to Gallery: Pictures/Gohar Shahi App")),
   );
+   } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(content: Text("Not supported on Phone")),
+  );
+
+    
+  }
 }
 
 
@@ -210,10 +218,11 @@ Future<void> _saveImage() async {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        mini: true,
         onPressed: _saveImage,
-        child: const Icon(Icons.save),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
+        child: const Icon(Icons.save),
       ),
     );
   }

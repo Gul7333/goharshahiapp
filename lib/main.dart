@@ -8,6 +8,7 @@ import 'package:gohar_shahi/Screens/HomeScreen.dart';
 import 'package:gohar_shahi/Screens/OtherScreen.dart';
 import 'package:gohar_shahi/Screens/ReferenceScreen.dart';
 import 'package:timezone/data/latest.dart' as tz;
+import 'package:clarity_flutter/clarity_flutter.dart';
 
 final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.system);
 // final RouteObserver<ModalRoute<void>> routeObserver = RouteObserver<ModalRoute<void>>();
@@ -18,7 +19,10 @@ Future<void> main(List<String> args) async {
 
   fvp.registerWith(); // Register FVP before creating any player
     // setSystemNavigationBarColor();
-
+ final config = ClarityConfig(
+    projectId: "s2flybycwq",
+    logLevel: LogLevel.None // Note: Use "LogLevel.Verbose" value while testing to debug initialization issues.
+  );
   tz.initializeTimeZones();
   // Enable Pdfium WASM support
   // _startBackgroundDownloads();
@@ -26,7 +30,10 @@ Future<void> main(List<String> args) async {
   WidgetsBinding.instance.addPostFrameCallback((_) {
     setSystemNavigationBarColor();
   });
-  runApp(const MyApp());
+  runApp(ClarityWidget(
+    app: MyApp(),
+    clarityConfig: config,
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -165,13 +172,16 @@ class _MainScreenState extends State<MainScreen> {
         selectedIndex: _selectedIndex,
         onDestinationSelected: _onItemTapped,
         backgroundColor: colorScheme.surface,
-        indicatorColor: colorScheme.primary.withValues(
-          alpha: (colorScheme.primary.a * 0.1).toDouble(), // Adjust opacity
-          red: colorScheme.primary.r.toDouble(),
-          green: colorScheme.primary.g.toDouble(),
-          blue: colorScheme.primary.b.toDouble(),
-        ),
+        // indicatorColor: colorScheme.primary.withValues(
+        //   alpha: (colorScheme.primary.a * 0.1).toDouble(), // Adjust opacity
+        //   red: colorScheme.primary.r.toDouble(),
+        //   green: colorScheme.primary.g.toDouble(),
+        //   blue: colorScheme.primary.b.toDouble(),
+        // ),
+        
         labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+        animationDuration: Duration(milliseconds: 300),
+        
         destinations: const [
           NavigationDestination(
             icon: FaIcon(FontAwesomeIcons.houseChimneyCrack),
