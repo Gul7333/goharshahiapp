@@ -42,13 +42,30 @@ class _NameNumberCalculatorState extends State<NameNumberCalculator> {
                 '🔢 Name Number Calculator',
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
+                            const SizedBox(height: 12),
+
+              const Text(
+                'Abjad is an ancient system in which each letter has a numerical value. '
+                'For example, the word "Allah" has a value of 66, which is why reciting the name Allah 66 times is considered spiritually beneficial. '
+                'Abjad is also mentioned on page 15 of "Deen-e-Ilahi". '
+                'You can also calculate the numerical value of your own name or any other name to understand its spiritual impact.',
+                textAlign: TextAlign.justify,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontFamily:
+                      "english", // Replace with your English font if needed
+                ),
+              ),
+
               const SizedBox(height: 16),
               TextField(
                 controller: _controller,
                 decoration: InputDecoration(
                   hintText: 'Enter your name',
                   prefixIcon: const Icon(Icons.person),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
               ),
               const SizedBox(height: 16),
@@ -59,14 +76,19 @@ class _NameNumberCalculatorState extends State<NameNumberCalculator> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.deepPurple,
                   foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
               ),
               const SizedBox(height: 20),
               if (_controller.text.isNotEmpty)
                 Text(
                   '🔢 Total Value: $total',
-                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
             ],
           ),

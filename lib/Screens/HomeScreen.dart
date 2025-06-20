@@ -35,8 +35,8 @@ class _HomescreenState extends State<Homescreen> {
   void initState() {
     super.initState();
     _startAutoPlay();
-    // checkForUpdate(context);
-    // checkForMessage(context);
+    checkForUpdate(context);
+    checkForMessage(context);
   }
 
 
