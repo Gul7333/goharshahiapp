@@ -121,7 +121,6 @@ class Gallery extends StatelessWidget {
   }
 }
 
-
 class FullImageView extends StatefulWidget {
   final int ind;
   final List<String> images;
@@ -155,44 +154,42 @@ class _FullImageViewState extends State<FullImageView> {
     super.dispose();
   }
 
-Future<void> _saveImage() async {
-  // final status = await Gal.hasAccess();
-  // if (!status) {
-  //   ScaffoldMessenger.of(context).showSnackBar(
-  //     const SnackBar(content: Text("Storage permission denied")),
-  //   );
-  //   return;
-  // }
-  try {
+  Future<void> _saveImage() async {
+    // final status = await Gal.hasAccess();
+    // if (!status) {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     const SnackBar(content: Text("Storage permission denied")),
+    //   );
+    //   return;
+    // }
+    try {
+      final assetPath =
+          widget.isMoon ? "assets/proofs/" : "assets/SarkarPicture/";
+      final imageName = widget.images[_currentIndex];
+      final byteData = await rootBundle.load("$assetPath$imageName");
 
-  final assetPath =
-      widget.isMoon ? "assets/proofs/" : "assets/SarkarPicture/";
-  final imageName = widget.images[_currentIndex];
-  final byteData = await rootBundle.load("$assetPath$imageName");
+      // Get Pictures directory (Gallery folder)
+      final directory = Directory(
+        "/storage/emulated/0/Pictures/Gohar Shahi App",
+      );
+      if (!await directory.exists()) {
+        await directory.create(recursive: true);
+      }
 
-  // Get Pictures directory (Gallery folder)
-  final directory = Directory("/storage/emulated/0/Pictures/Gohar Shahi App");
-  if (!await directory.exists()) {
-    await directory.create(recursive: true);
-  }
+      final filePath = "${directory.path}/$imageName";
+      final file = File(filePath);
 
-  final filePath = "${directory.path}/$imageName";
-  final file = File(filePath);
+      await file.writeAsBytes(byteData.buffer.asUint8List());
 
-  await file.writeAsBytes(byteData.buffer.asUint8List());
-
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(content: Text("Saved to Gallery: Pictures/Gohar Shahi App")),
-  );
-   } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(content: Text("Not supported on Phone")),
-  );
-
-    
+        SnackBar(content: Text("Saved to Gallery: Pictures/Gohar Shahi App")),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Not supported on Phone")));
+    }
   }
-}
-
 
   @override
   Widget build(BuildContext context) {
@@ -227,7 +224,6 @@ Future<void> _saveImage() async {
     );
   }
 }
-
 
 //  video player
 
@@ -278,6 +274,11 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen> {
 List<String> moonVideo = ["1.mp4", "2.mp4", "3.mp4", "4.mp4"];
 
 List<String> moon = [
+  "divine-signs-maha-shiv-ling.png",
+  "Hajre Aswad.jpeg",
+  "mahashivling-kalkiavatar.png",
+  "sun-kalkiavatar.png",
+  "shivling-kalkiavatar.png",
   "Gohar Shahi image on moon 1.jpg",
   "Gohar Shahi image on moon 2.jpg",
   "Gohar Shahi image on moon 3.jpg",

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gohar_shahi/Helper/lauchUrl.dart';
 import 'package:http/http.dart' as http;
-import 'package:url_launcher/url_launcher.dart';
 import 'package:rss_dart/dart_rss.dart';
 
 class YouTubeFeedWidget extends StatefulWidget {
@@ -29,7 +28,6 @@ class _YouTubeFeedWidgetState extends State<YouTubeFeedWidget> {
       final url =
           'https://www.youtube.com/feeds/videos.xml?channel_id=${widget.channelId}';
       final response = await http.get(Uri.parse(url));
-
       final feed = AtomFeed.parse(response.body);
       setState(() {
         _videos = feed.items;
@@ -43,12 +41,7 @@ class _YouTubeFeedWidgetState extends State<YouTubeFeedWidget> {
     }
   }
 
-  Future<void> _openVideo(String link) async {
-    final uri = Uri.parse(link);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    }
-  }
+
 
   String? _extractVideoId(String? fullId) {
     if (fullId == null) return null;
@@ -60,7 +53,7 @@ class _YouTubeFeedWidgetState extends State<YouTubeFeedWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Latest Alra Tv Videos"),),
-      body: _error != null ? Text("error occured") :
+      body: _error != null ? Center(child: Text("error occured: No Internet")) :
           _loading
               ? const Center(child: CircularProgressIndicator())
               : ListView.builder(
@@ -77,7 +70,7 @@ class _YouTubeFeedWidgetState extends State<YouTubeFeedWidget> {
                               : null);
                   final title =
                       video.media?.title?.type ?? video.title ?? 'No title';
-                  final description = video.media?.description ?? '';
+                  // final description = video.media?.description ?? '';
                   final published = 
               
                       video.published?.toString().split('.')[0] ?? '';
