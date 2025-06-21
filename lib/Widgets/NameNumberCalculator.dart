@@ -42,18 +42,19 @@ class _NameNumberCalculatorState extends State<NameNumberCalculator> {
                 '🔢 Name Number Calculator',
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
-                            const SizedBox(height: 12),
+
+              const SizedBox(height: 12),
 
               const Text(
                 'Abjad is an ancient system in which each letter has a numerical value. '
                 'For example, the word "Allah" has a value of 66, which is why reciting the name Allah 66 times is considered spiritually beneficial. '
                 'Abjad is also mentioned on page 15 of "Deen-e-Ilahi". '
-                'You can also calculate the numerical value of your own name or any other name to understand its spiritual impact.',
+                'You can also calculate the numerical value of your own name or any other name to understand its spiritual impact.'
+                '\nNote: english version is not real abjad although it is used in Numerology',
                 textAlign: TextAlign.justify,
                 style: TextStyle(
-                  fontSize: 16,
-                  fontFamily:
-                      "english", // Replace with your English font if needed
+                  fontSize: 12,
+
                 ),
               ),
 

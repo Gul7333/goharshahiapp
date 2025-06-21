@@ -16,7 +16,6 @@ final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.system);
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
   // SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-
   fvp.registerWith(); // Register FVP before creating any player
     // setSystemNavigationBarColor();
  final config = ClarityConfig(

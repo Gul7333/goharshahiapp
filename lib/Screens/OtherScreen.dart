@@ -6,6 +6,7 @@ import 'package:gohar_shahi/RouteAnimation/FadeAnimations.dart';
 import 'package:gohar_shahi/Screens/PrayerScreen.dart';
 import 'package:gohar_shahi/Widgets/AbjadCalculator.dart';
 import 'package:gohar_shahi/Widgets/OpenLivePdf.dart';
+import 'package:gohar_shahi/Widgets/YouTubeFeedWidget.dart';
 
 class Otherscreen extends StatelessWidget {
   const Otherscreen({super.key});
@@ -43,14 +44,26 @@ class Otherscreen extends StatelessWidget {
       {
         'title': 'Abjad ',
         'subtitle': 'Calculate Number of Your name',
-        'icon': FontAwesomeIcons.link,
-        'color': const Color.fromARGB(255, 83, 52, 138),
+        'icon': FontAwesomeIcons.addressCard,
+        'color': const Color.fromARGB(255, 245, 126, 96),
         'onTap':
             () => Navigator.of(
               context,
             ).push(createDropFadeRoute(UrduAbjadCalculator())),
       },
+      
+       {
+        'title': 'Latest Alra Tv Videos',
+        'subtitle': 'Alra tv feed',
+        'icon': FontAwesomeIcons.youtube,
+        'color': const Color.fromARGB(255, 241, 54, 54),
+        'onTap':
+            () => Navigator.of(
+              context,
+            ).push(createDropFadeRoute(YouTubeFeedWidget(channelId: "UC69YYWvWloLRgnNTMVCEUNA"))),
+      },
     ];
+
 
     return Scaffold(
       appBar: AppBar(

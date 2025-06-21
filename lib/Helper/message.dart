@@ -33,7 +33,7 @@ void _showMessageModal(BuildContext context, String newMessage) {
     context: context,
     barrierDismissible: false,
     builder: (context) => AlertDialog(
-      title: const Text("New Message for you"),
+      // title: const Text("New Message for you"),
       content: SizedBox(
         // Limit dialog height
         height: MediaQuery.of(context).size.height * 0.6,
@@ -41,9 +41,7 @@ void _showMessageModal(BuildContext context, String newMessage) {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "Please read Carefully.\n",
-            ),
+          
             const SizedBox(height: 8),
             Expanded(
               child: Markdown(

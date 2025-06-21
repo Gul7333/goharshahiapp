@@ -55,6 +55,7 @@ dependencies:
   html: ^0.15.6
   flutter_launcher_icons: ^0.14.3
   clarity_flutter: ^1.0.0
+  rss_dart: ^1.0.13
 
 dev_dependencies:
   flutter_test:
